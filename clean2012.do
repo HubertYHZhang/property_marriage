@@ -56,8 +56,12 @@ replace othervalue7 = . if othervalue7 < 0
 
 gen othervalue = othervalue1 + othervalue2 + othervalue3 + othervalue4 + othervalue5 + othervalue6 + othervalue7
 
+
+
 local varlist fid12 fid10
 keep `varlist'
+
+save "${outpath}/temp/econ_2012.dta",replace
 
 *----------------------------------econ2012----------------------------------
 
@@ -72,6 +76,12 @@ clonevar marry_raw = qe104
 gen marry = .
 replace marry = 1 if marry_raw == 2
 replace marry = 0 if marry_raw !=2 & marry_raw >0
+
+*结婚年份和月份
+gen marry_y = .
+replace marry_y = cfps2010_e210y if qec104 == 1
+replace marry_y = qe208y if marry_raw == 2 & cfps2010_marriage != 2 & qe208y > 0
+replace marry_y = qec105y if qec104 == 5 & qec105y > 0
 
 merge 1:1 pid using "${outpath}/temp/2010marriage.dta",keep(1 3) nogen
 

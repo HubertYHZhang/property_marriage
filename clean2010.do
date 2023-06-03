@@ -46,7 +46,7 @@ local varlist fid regis* propertytype* value* purchase_y square movein_y housety
 
 keep `varlist'
 
-save "${outpath}/temp/econ_needed.dta",replace
+save "${outpath}/temp/econ_2010.dta",replace
 
 *----------------------------------econ2010----------------------------------
 
