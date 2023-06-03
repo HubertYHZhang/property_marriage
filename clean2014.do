@@ -20,21 +20,32 @@ replace value_past = . if value_past < 0
 
 clonevar value_mkt = fq6
 replace value_mkt = . if value_mkt < 0
+replace value_mkt = (fq6_max + fq6_min)/2 if fq6 < 0 & fq6_max > 0 & fq6_min > 0
+
+*连面积都要参考上次……
+
+clonevar square_new = fq801
+replace square_new = . if square_new < 0
 
 clonevar otherprop = fr1
 replace otherprop = . if otherprop < 0
 
 clonevar othernumber = fr101
 replace othernumber = . if othernumber < 0
+replace othernumber = 0 if otherprop == 0
 
-clonevar othervalue = fr102
+clonevar othervalue = fr2_best
 replace othervalue = . if othervalue < 0
+replace othervalue = (fr2_max + fr2_min)/2 if othervalue == . & fr2_max > 0 & fr2_min > 0
 
 clonevar lease = fr5
 replace lease = . if lease < 0
+*是否应该把缺失当作0？
 
 clonevar total_rent = fr501
 replace total_rent = . if total_rent < 0
+replace total_rent = 0 if lease == 0
+
 
 *----------------------------------econ2014----------------------------------
 

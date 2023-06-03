@@ -1,3 +1,19 @@
+*----------------------------------comm2010----------------------------------
+
+use "${rawpath}/cfps2010/cfps2010comm_201906.dta",clear
+
+clonevar local_price = cf3
+replace local_price = . if local_price < 0
+
+clonevar local_price_highest = cf2
+replace local_price_highest = . if local_price_highest < 0
+
+keep cid local_price local_price_highest
+
+save "${outpath}/temp/comm_2010.dta",replace
+
+*----------------------------------comm2010----------------------------------
+
 *----------------------------------econ2010----------------------------------
 use "${rawpath}/cfps2010/cfps2010famecon_202008.dta",clear
 
@@ -77,6 +93,8 @@ replace edu = . if edu < 0
 
 *----------------------------------ind2010----------------------------------
 
-merge m:1 fid using "${outpath}/temp/econ_needed.dta",keep(3) nogen
+merge m:1 fid using "${outpath}/temp/econ_2010.dta",keep(3) nogen
+merge m:1 cid using "${outpath}/temp/comm_2010.dta",keep(1 3) nogen
 
 save "${outpath}/temp/ind&econ_2010.dta",replace
+

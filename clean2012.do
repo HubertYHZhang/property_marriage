@@ -86,8 +86,8 @@ replace marry_y = qec105y if qec104 == 5 & qec105y > 0
 
 merge 1:1 pid using "${outpath}/temp/2010marriage.dta",keep(1 3) nogen
 
-gen panel2010 = .
-replace panel2010 = 1 if marry2010 == 2 & marry_raw == 2 & qe201 == 1
+/* gen panel2010 = .
+replace panel2010 = 1 if marry2010 == 2 & marry_raw == 2 & qe201 == 1 */
 
 gen control2012 = .
 replace control2012 = 1 if marry2010 ==1 & marry_raw == 2
