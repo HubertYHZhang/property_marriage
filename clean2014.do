@@ -1,3 +1,19 @@
+
+*----------------------------------comm2014----------------------------------
+use "${rawpath}/cfps2014/cfps2014comm_201906.dta",clear
+
+clonevar local_price_highest = cf2
+replace local_price_highest = . if local_price_highest < 0
+
+clonevar local_price = cf3
+replace local_price = . if local_price < 0
+
+keep cid14 local_price_highest local_price
+
+save "${outpath}/temp/comm_2014.dta",replace
+
+*----------------------------------comm2014----------------------------------
+
 *----------------------------------econ2014----------------------------------
 use "${rawpath}/cfps2014/cfps2014famecon_201906.dta",clear
 
@@ -46,7 +62,7 @@ clonevar total_rent = fr501
 replace total_rent = . if total_rent < 0
 replace total_rent = 0 if lease == 0
 
-
+save "${outpath}/temp/econ_2014.dta",replace
 *----------------------------------econ2014----------------------------------
 
 *----------------------------------ind2014----------------------------------
@@ -75,5 +91,8 @@ clonevar male = cfps_gender
 
 clonevar edu = cfps2014edu
 replace edu = . if edu < 0
+
+merge m:1 fid14 using "${outpath}/temp/econ_2014.dta",keep(3) nogen
+merge m:1 cid14 using "${outpath}/temp/comm_2014.dta",keep(1 3) nogen
 
 save "${outpath}/temp/ind&econ_2014.dta",replace
