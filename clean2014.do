@@ -50,11 +50,15 @@ replace marry = 1 if marry_raw == 2
 replace marry = 0 if marry_raw !=2 & marry_raw >0
 
 *大部分人的婚姻时间都要参考上一次的调查
-clonevar marry_year_new = qea205y
-replace marry_year_new = . if marry_year_new < 0
 
 clonevar first_mar_new = qea2071
 replace first_mar_new = . if first_mar_new < 0
+
+merge 1:1 pid using "${outpath}/temp/2012marriage.dta",keep(1 3) nogen
+
+gen marry_y = .
+replace marry_y = qea205y if qea2 == 2 & qea205y > 0
+replace marry_y = marry_y2012 if cfps2012_marriage == 2 & marry_y2012 > 0 & marry_y == .
 
 clonevar male = cfps_gender
 

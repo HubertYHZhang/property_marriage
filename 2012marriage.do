@@ -1,3 +1,7 @@
-use "${rawpath}/cfps2012/cfps2012adult_201906.dta",clear
+use "${outpath}/temp/ind_2012.dta",clear
 
-keep pid qe104
+keep pid marry_raw marry_y
+rename marry_raw marry_raw2012
+rename marry_y marry_y2012
+
+save "${outpath}/temp/2012marriage.dta",replace

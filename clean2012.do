@@ -82,6 +82,7 @@ gen marry_y = .
 replace marry_y = cfps2010_e210y if qec104 == 1
 replace marry_y = qe208y if marry_raw == 2 & cfps2010_marriage != 2 & qe208y > 0
 replace marry_y = qec105y if qec104 == 5 & qec105y > 0
+*依然有部分结婚的人结婚年份缺失，原因未知
 
 merge 1:1 pid using "${outpath}/temp/2010marriage.dta",keep(1 3) nogen
 
@@ -97,5 +98,5 @@ replace control2012_1 = 1 if marry2010 == 1|marry2010 == 3 & marry_raw == 2
 clonevar edu = kr1
 replace edu = kw1 if kr1 < 0
 
-save "${outpath}/temp/ind_2010.dta",replace
+save "${outpath}/temp/ind_2012.dta",replace
 *----------------------------------ind2012----------------------------------
