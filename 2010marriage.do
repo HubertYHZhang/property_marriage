@@ -1,5 +1,4 @@
-global rawpath "/Users/hubertcheung/Desktop/parental retirement and labor time/"
-global outpath "/Users/hubertcheung/Desktop/The last dance/人口经济学论文/"
+
 
 use "${rawpath}/cfps2010/cfps2010adult_202008.dta",clear
 
