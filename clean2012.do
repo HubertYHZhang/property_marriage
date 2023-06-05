@@ -28,38 +28,35 @@ clonevar othernumber = fr101
 replace othernumber = . if othernumber < 0
 
 clonevar othervalue1 = fr2a_a_1
-replace othervalue1 = . if othervalue1 < 0 & fr2a_a_2 <0
+replace othervalue1 = 0 if othervalue1 < 0 & fr2a_a_2 <0
 replace othervalue1 = 0 if othervalue1 < 0 & fr2a_a_2 >=0 & fr2a_a_2 != .
 
 clonevar othervalue2 = fr2a_a_2
-replace othervalue2 = . if othervalue2 < 0 & fr2a_a_3 <0
+replace othervalue2 = 0 if othervalue2 < 0 & fr2a_a_3 <0
 replace othervalue2 = 0 if othervalue2 < 0 & fr2a_a_3 >=0 & fr2a_a_3 != .
 
 clonevar othervalue3 = fr2a_a_3
-replace othervalue3 = . if othervalue3 < 0 & fr2a_a_4 <0
+replace othervalue3 = 0 if othervalue3 < 0 & fr2a_a_4 <0
 replace othervalue3 = 0 if othervalue3 < 0 & fr2a_a_4 >=0 & fr2a_a_4 != .
 
 clonevar othervalue4 = fr2a_a_4
-replace othervalue4 = . if othervalue4 < 0 & fr2a_a_5 <0
+replace othervalue4 = 0 if othervalue4 < 0 & fr2a_a_5 <0
 replace othervalue4 = 0 if othervalue4 < 0 & fr2a_a_5 >=0 & fr2a_a_5 != .
 
 clonevar othervalue5 = fr2a_a_5
-replace othervalue5 = . if othervalue5 < 0 & fr2a_a_6 <0
+replace othervalue5 = 0 if othervalue5 < 0 & fr2a_a_6 <0
 replace othervalue5 = 0 if othervalue5 < 0 & fr2a_a_6 >=0 & fr2a_a_6 != .
 
 clonevar othervalue6 = fr2a_a_6
-replace othervalue6 = . if othervalue6 < 0 & fr2a_a_7 <0
+replace othervalue6 = 0 if othervalue6 < 0 & fr2a_a_7 <0
 replace othervalue6 = 0 if othervalue6 < 0 & fr2a_a_7 >=0 & fr2a_a_7 != .
 
 clonevar othervalue7 = fr2a_a_7
-replace othervalue7 = . if othervalue7 < 0
+replace othervalue7 = 0 if othervalue7 < 0
 
 gen othervalue = othervalue1 + othervalue2 + othervalue3 + othervalue4 + othervalue5 + othervalue6 + othervalue7
 
 
-
-local varlist fid12 fid10
-keep `varlist'
 
 save "${outpath}/temp/econ_2012.dta",replace
 
@@ -95,8 +92,64 @@ replace control2012 = 1 if marry2010 ==1 & marry_raw == 2
 gen control2012_1 = .
 replace control2012_1 = 1 if marry2010 == 1|marry2010 == 3 & marry_raw == 2
 
+clonevar male = cfps2012_gender_best
+
 clonevar edu = kr1
 replace edu = kw1 if kr1 < 0
 
 save "${outpath}/temp/ind_2012.dta",replace
 *----------------------------------ind2012----------------------------------
+
+*----------------------------------famconf2012----------------------------------
+
+use "${rawpath}/cfps2012/cfps2012famconf_092015.dta",clear
+
+keep if cfps_interv_p == 1
+gen indno = code_a_p - 100 if inrange(code_a_p,100,199)
+keep pid code_a_s pid_s indno
+
+save "${outpath}/temp/famconf_2012.dta",replace
+
+*----------------------------------famconf2012----------------------------------
+use "${outpath}/temp/ind_2012.dta",clear
+
+merge m:1 fid12 using "${outpath}/temp/econ_2012.dta",keep(3) nogen
+keep pid-urban12 age-edu propertytype-othervalue
+
+merge 1:1 pid using "${outpath}/temp/famconf_2012.dta",keep(3) nogen
+
+clonevar spouse_id = code_a_s
+replace spouse_id = . if spouse_id < 0
+gen spouse_id_lastdigit = spouse_id - 100 if inrange(spouse_id,100,199)
+
+clonevar spouse_pid = pid_s
+replace spouse_pid = . if spouse_pid < 0
+
+gen selfown = .
+gen spouseown = .
+gen coown = .
+gen otherown = .
+foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
+	replace spouseown = 1 if `i' == spouse_id_lastdigit
+	replace selfown = 1 if `i' == indno
+	replace coown = 1 if spouseown == 1 & selfown == 1
+	replace spouseown = . if coown == 1
+	replace selfown = . if coown == 1
+}
+replace otherown = 1 if spouseown == . & selfown == . & coown == .
+
+gen year = 2012
+
+save "${outpath}/temp/ind&econ_2012.dta",replace
+
+use "${rawpath}/cfps2010/cfps2010adult_202008.dta",clear
+keep pid
+clonevar pid10 = pid
+save "${outpath}/temp/check2010.dta",replace
+
+use "${outpath}/temp/ind&econ_2012.dta",clear
+merge 1:1 pid using "${outpath}/temp/check2010.dta"
+gen isin2010 = 1 if pid10 != .
+replace isin2010 = 0 if pid10 == .
+
+save "${outpath}/temp/ind&econ_2012.dta",replace
