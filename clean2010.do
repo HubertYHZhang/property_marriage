@@ -20,7 +20,7 @@ use "${rawpath}/cfps2010/cfps2010famecon_202008.dta",clear
 local counter = 1
 foreach i in fd101_s_1 fd101_s_2 fd101_s_3{
 	clonevar regis_`counter' = `i'
-	replace regis_`counter' = . if regis_`counter' <0
+	replace regis_`counter' = . if regis_`counter' <0 | regis_`counter' > 70
 	local counter = `counter'+1
 }
 
@@ -58,10 +58,6 @@ clonevar housetype = fd6
 
 clonevar otherprop = fd7
 
-local varlist fid regis* propertytype* value* purchase_y square movein_y housetype
-
-keep `varlist'
-
 save "${outpath}/temp/econ_2010.dta",replace
 
 *----------------------------------econ2010----------------------------------
@@ -91,10 +87,37 @@ clonevar male = gender
 clonevar edu = qc1
 replace edu = . if edu < 0
 
+clonevar spouse_id = code_a_s
+replace spouse_id = . if spouse_id < 0
+gen spouse_id_lastdigit = spouse_id - 100 if inrange(spouse_id,101,199)
+
+clonevar spouse_pid = pid_s
+replace spouse_pid = . if spouse_pid < 0
+
 *----------------------------------ind2010----------------------------------
 
 merge m:1 fid using "${outpath}/temp/econ_2010.dta",keep(3) nogen
 merge m:1 cid using "${outpath}/temp/comm_2010.dta",keep(1 3) nogen
 
-save "${outpath}/temp/ind&econ_2010.dta",replace
+gen year = 2010
 
+keep pid-urban age-spouse_pid regis_1-otherprop year
+
+gen selfown = .
+gen spouseown = .
+gen coown = .
+gen otherown = .
+foreach i in regis_1 regis_2 regis_3{
+	replace spouseown = 1 if `i' == spouse_id_lastdigit
+	replace selfown = 1 if `i' == indno
+	replace coown = 1 if spouseown == 1 & selfown == 1
+	replace spouseown = . if coown == 1
+	replace selfown = . if coown == 1
+}
+replace otherown = 1 if spouseown == . & selfown == . & coown == .
+
+foreach i in selfown spouseown coown otherown{
+	replace `i' = 0 if `i' == .
+}
+
+save "${outpath}/temp/ind&econ_2010.dta",replace
