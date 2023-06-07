@@ -6,4 +6,4 @@ rename qe1_best marry2010
 replace marry2010 = . if marry2010 < 0
 keep pid marry2010
 
-save "${outpath}/temp/2010marriage.dta",replace
+save "${outpath}/temp/marriage/2010marriage.dta",replace
