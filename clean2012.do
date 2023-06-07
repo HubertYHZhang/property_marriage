@@ -3,6 +3,9 @@ use "${rawpath}/cfps2012/cfps2012famecon_201906.dta",clear
 
 clonevar propertytype = fq1
 
+clonevar purchase_y = fq6
+replace purchase_y = . if purchase_y < 0
+
 local counter = 1
 foreach var in fq3_s_1 fq3_s_2 fq3_s_3 fq3_s_4 fq3_s_5 fq3_s_6 fq3_s_7 fq3_s_8{
 	clonevar regis_`counter' = `var'
