@@ -50,6 +50,11 @@ clonevar propwhethersame = fq1
 
 clonevar propertytype = fq2
 
+clonevar purchasebuild_y = fq4
+replace purchasebuild_y = . if purchasebuild_y < 0
+
+clonevar purchase_y = purchasebuild_y
+
 local counter = 1
 foreach var in fq3pid_a_1 fq3pid_a_2 fq3pid_a_3 fq3pid_a_4 fq3pid_a_5 fq3pid_a_6 fq3pid_a_7 fq3pid_a_8{
 	clonevar regis_`counter' = `var'
@@ -57,8 +62,6 @@ foreach var in fq3pid_a_1 fq3pid_a_2 fq3pid_a_3 fq3pid_a_4 fq3pid_a_5 fq3pid_a_6
 	local counter = `counter'+1
 }
 
-clonevar purchasebuild_y = fq4
-replace purchasebuild_y = . if purchasebuild_y < 0
 
 clonevar value_past = fq5
 replace value_past = . if value_past < 0
