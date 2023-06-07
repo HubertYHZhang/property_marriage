@@ -3,8 +3,8 @@ global outpath "/Users/hubertcheung/Documents/GitHub/property_marriage"
 
 *需要建构多种样本：1. 对比所有一直结婚了的但是处在不同房价地区的人，2. 对比2011年前结婚和2011年后结婚的人（2010年前的人的状态对比2011年后的状态），3. 对比2011年前结婚和2011年后结婚的人（同时期状态对比）
 
-local clean = 0
-local construct = 2
+local clean = 1
+local construct = 0
 
 if `clean' == 1{
 
@@ -14,31 +14,39 @@ clonevar pid10 = pid
 save "${outpath}/temp/check2010.dta",replace
 
 do "${outpath}/housing_crossyear.do"
+do "${outpath}/marriage_crossyear.do"
 
 do "${outpath}/clean2010.do"
 
-do "${outpath}/2010marriage.do"
+/* do "${outpath}/2010marriage.do" */
 
 do "${outpath}/clean2012.do"
 
-do "${outpath}/2012marriage.do"
+/* do "${outpath}/2012marriage.do" */
 
 do "${outpath}/clean2014.do"
 
 do "${outpath}/clean2016.do"
 
+do "${outpath}/clean2018.do"
+
 use "${outpath}/temp/ind&econ_2010.dta",clear
-append using "${outpath}/temp/ind&econ_2012.dta" "${outpath}/temp/ind&econ_2014.dta" "${outpath}/temp/ind&econ_2016.dta"
+append using "${outpath}/temp/ind&econ_2012.dta" "${outpath}/temp/ind&econ_2014.dta" "${outpath}/temp/ind&econ_2016.dta" "${outpath}/temp/ind&econ_2018.dta"
+
+keep if male == 1
+keep if propertytype == 1
+keep if urban == 1
 
 gen owntype = .
 replace owntype = 1 if selfown == 1
 replace owntype = 2 if spouseown == 1
-replace owntype = 3 if otherown == 1 
-label define owntype 1 "self" 2 "spouse" 3 "other"
+replace owntype = 3 if coown == 1
+replace owntype = 4 if otherown == 1
+label define owntype 1 "self" 2 "spouse" 3 "co" 4 "other"
 label values owntype owntype
 
 save "${outpath}/data/ind&econ.dta",replace
-
+export delimited "${outpath}/data/ind&econ.csv",replace
 }
 
 if `construct' == 1{
@@ -58,6 +66,8 @@ else if `construct' == 2{
     keep if urban == 1
 
     keep if inrange(marry_y,2006,2016)
+
+    tab owntype purchase_y  if inrange(purchase_y ,2006 ,2016) & year == 2018,co
 
 }
 
