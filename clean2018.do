@@ -4,6 +4,9 @@ use "${rawpath}/cfps2018/cfps2018person_202012.dta",clear
 
 /* clonevar age = cfps_age
 replace age = . if age < 0 */
+rename age age1
+clonevar age = age1
+replace age = . if age < 0
 
 clonevar marry_raw = qea0
 replace marry_raw = . if marry_raw < 0
