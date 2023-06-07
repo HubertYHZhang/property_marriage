@@ -112,6 +112,7 @@ gen spouseown = .
 gen coown = .
 gen otherown = .
 gen spouselisted = .
+gen exist = .
 foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace spouseown = 1 if `i' == spouse_pid
 	replace selfown = 1 if `i' == pid
@@ -119,8 +120,9 @@ foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace spouseown = . if coown == 1
 	replace selfown = . if coown == 1
     replace spouselisted = 1 if spouseown == 1 | coown == 1
+    replace exist = 1 if `i' >0 & `i' != .
 }
-replace otherown = 1 if spouseown == . & selfown == . & coown == .
+replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist == 1
 foreach i in spouseown selfown coown otherown spouselisted{
     replace `i' = 0 if `i' == .
 }
