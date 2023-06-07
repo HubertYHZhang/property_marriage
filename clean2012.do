@@ -81,7 +81,7 @@ replace marry_y = qe208y if marry_raw == 2 & cfps2010_marriage != 2 & qe208y > 0
 replace marry_y = qec105y if qec104 == 5 & qec105y > 0
 *依然有部分结婚的人结婚年份缺失，原因未知
 
-merge 1:1 pid using "${outpath}/temp/2010marriage.dta",keep(1 3) nogen
+merge 1:1 pid using "${outpath}/temp/marriage/2010marriage.dta",keep(1 3) nogen
 
 /* gen panel2010 = .
 replace panel2010 = 1 if marry2010 == 2 & marry_raw == 2 & qe201 == 1 */
@@ -120,18 +120,19 @@ keep pid-urban age-edu propertytype-othervalue
 
 merge 1:1 pid using "${outpath}/temp/famconf_2012.dta",keep(3) nogen
 
+clonevar spouse_pid = pid_s
 clonevar spouse_id = code_a_s
 replace spouse_id = . if spouse_id < 0
-gen spouse_id_lastdigit = spouse_id - 100 if inrange(spouse_id,100,199)
+/* gen spouse_id_lastdigit = spouse_id - 100 if inrange(spouse_id,100,199) */
+gen spouse_id_lastdigit = mod(spouse_pid,10)
 
-clonevar spouse_pid = pid_s
-replace spouse_pid = . if spouse_pid < 0
 
 gen selfown = .
 gen spouseown = .
 gen coown = .
 gen otherown = .
 gen spouselisted = .
+gen exist = .
 foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace spouseown = 1 if `i' == spouse_id_lastdigit
 	replace selfown = 1 if `i' == indno
@@ -139,8 +140,9 @@ foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace spouseown = . if coown == 1
 	replace selfown = . if coown == 1
     replace spouselisted = 1 if spouseown == 1 | coown == 1
+    replace exist = 1 if `i' >0 & `i' != .
 }
-replace otherown = 1 if spouseown == . & selfown == . & coown == .
+replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist == 1
 foreach i in spouseown selfown coown otherown spouselisted{
     replace `i' = 0 if `i' == .
 }
