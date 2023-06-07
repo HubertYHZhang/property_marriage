@@ -76,8 +76,8 @@ gen marry = .
 replace marry = 1 if marry_raw == 2
 replace marry = 0 if marry_raw !=2 & marry_raw >0
 
-clonevar marry_year = qe210y
-replace marry_year = . if marry_year < 0
+clonevar marry_y = qe210y
+replace marry_y = . if marry_y < 0
 
 clonevar first_mar = qe2
 replace first_mar = . if first_mar < 0
