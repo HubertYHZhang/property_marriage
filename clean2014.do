@@ -85,7 +85,7 @@ replace marry = 0 if marry_raw !=2 & marry_raw >0
 clonevar first_mar_new = qea2071
 replace first_mar_new = . if first_mar_new < 0
 
-merge 1:1 pid using "${outpath}/temp/2012marriage.dta",keep(1 3) nogen
+merge 1:1 pid using "${outpath}/temp/marriage/2012marriage.dta",keep(1 3) nogen
 
 gen marry_y = .
 replace marry_y = qea205y if qea2 == 2 & qea205y > 0
@@ -120,6 +120,7 @@ gen spouseown = .
 gen coown = .
 gen otherown = .
 gen spouselisted = .
+gen exist = .
 foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace spouseown = 1 if `i' == spouse_pid
 	replace selfown = 1 if `i' == pid
@@ -127,8 +128,9 @@ foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace spouseown = . if coown == 1
 	replace selfown = . if coown == 1
     replace spouselisted = 1 if spouseown == 1 | coown == 1
+	replace exist = 1 if `i' >0 & `i' != .
 }
-replace otherown = 1 if spouseown == . & selfown == . & coown == .
+replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist == 1
 foreach i in spouseown selfown coown otherown spouselisted{
     replace `i' = 0 if `i' == .
 }
