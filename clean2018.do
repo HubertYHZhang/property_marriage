@@ -60,8 +60,8 @@ foreach var in fq3pid_a_1 fq3pid_a_2 fq3pid_a_3 fq3pid_a_4 fq3pid_a_5 fq3pid_a_6
 	local counter = `counter'+1
 }
 
-clonevar purchasebuild_y = fq4
-replace purchasebuild_y = . if purchasebuild_y < 0
+clonevar purchasebuild_y_new = fq4
+replace purchasebuild_y_new = . if purchasebuild_y < 0
 
 clonevar value_past = fq5
 replace value_past = . if value_past < 0
@@ -77,6 +77,9 @@ replace square_new = . if square_new < 0
 
 merge m:1 fid16 using "${outpath}/temp/housing/housing_2016.dta",keep(1 3) nogen
 replace square = square_new if (((fq8 == 2 |fq8 == 3) & fq1 == 1) | fq1 == 0 | fq1 < 0) & square_new != .
+
+replace purchasebuild_y = purchasebuild_y_new if purchasebuild_y_new != .
+clonevar purchase_y = purchasebuild_y
 
 clonevar otherprop = fr1
 replace otherprop = . if otherprop < 0
