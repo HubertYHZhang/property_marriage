@@ -31,6 +31,8 @@ foreach var in fq3pid_a_1 fq3pid_a_2 fq3pid_a_3 fq3pid_a_4 fq3pid_a_5 fq3pid_a_6
 clonevar purchasebuild_y = fq4
 replace purchasebuild_y = . if purchasebuild_y < 0
 
+clonevar purchase_y = purchasebuild_y
+
 clonevar value_past = fq5
 replace value_past = . if value_past < 0
 
