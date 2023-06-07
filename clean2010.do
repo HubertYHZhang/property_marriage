@@ -58,7 +58,7 @@ clonevar housetype = fd6
 
 clonevar otherprop = fd7
 
-save "${outpath}/temp/econ_2010.dta",replace
+save "${outpath}/temp/marriage/econ_2010.dta",replace
 
 *----------------------------------econ2010----------------------------------
 
@@ -108,6 +108,7 @@ gen spouseown = .
 gen coown = .
 gen otherown = .
 gen spouselisted = .
+gen exist = .
 foreach i in regis_1 regis_2 regis_3{
 	replace spouseown = 1 if `i' == spouse_id_lastdigit
 	replace selfown = 1 if `i' == indno
@@ -115,8 +116,9 @@ foreach i in regis_1 regis_2 regis_3{
 	replace spouseown = . if coown == 1
 	replace selfown = . if coown == 1
 	replace spouselisted = 1 if spouseown ==1 | coown == 1
+    replace exist = 1 if `i' >0 & `i' != .
 }
-replace otherown = 1 if spouseown == . & selfown == . & coown == .
+replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist == 1
 
 foreach i in selfown spouseown coown otherown spouselisted{
 	replace `i' = 0 if `i' == .
