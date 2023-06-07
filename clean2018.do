@@ -2,8 +2,8 @@
 *-------------------------------ind2016-----------------------------*
 use "${rawpath}/cfps2018/cfps2018person_202012.dta",clear
 
-clonevar age = cfps_age
-replace age = . if age < 0
+/* clonevar age = cfps_age
+replace age = . if age < 0 */
 
 clonevar marry_raw = qea0
 replace marry_raw = . if marry_raw < 0
@@ -15,35 +15,39 @@ replace marry = 0 if marry_raw != 2 & marry_raw > 0
 clonevar first_mar_new = qea2071
 replace first_mar_new = . if first_mar_new < 0
 
-merge 1:1 pid using "${outpath}/temp/2014marriage.dta",keep(1 3) nogen
+merge 1:1 pid using "${outpath}/temp/marriage/2016marriage.dta",keep(1 3) nogen
+
+gen cfps2016_marriage = .
+replace cfps2016_marriage = qea2 if qea2 >= 0
+replace cfps2016_marriage = marry_raw2016 if marry_raw2016 >= 0 & cfps2016_marriage == .
 
 gen marry_y = .
 replace marry_y = qea205y if qea2 == 2 & qea205y > 0 & qea205y != .
-replace marry_y = marry_y2014 if cfps2014_marriage == 2 & marry_y2014 > 0 & marry_y2014 != . & marry_y == .
+replace marry_y = marry_y2016 if cfps2016_marriage == 2 & marry_y2016 > 0 & marry_y2016 != . & marry_y == .
 
-clonevar male = cfps_gender
+clonevar male = gender
 
-clonevar edu = cfps2016edu
+clonevar edu = cfps2018edu
 replace edu = . if edu < 0
 
-rename urban16 urban
+rename urban18 urban
 
-save "${outpath}/temp/ind_2016.dta",replace
+save "${outpath}/temp/ind_2018.dta",replace
 
 *-------------------------------ind2016-----------------------------*
 
 *-------------------------------famconf2016-----------------------------*
 
-use "${rawpath}/cfps2016/cfps2016famconf_201804.dta",clear
+use "${rawpath}/cfps2018/cfps2018famconf_202008.dta",clear
 
-keep pid pid_s code_a_s
-rename pid_s spouse_pid
+keep pid pid_a_s code_a_s
+rename pid_a_s spouse_pid
 rename code_a_s spouse_id
 
-save "${outpath}/temp/famconf_2016.dta",replace
+save "${outpath}/temp/famconf_2018.dta",replace
 
 *-------------------------------econ2016-----------------------------*
-use "${rawpath}/cfps2016/cfps2016famecon_201807.dta",clear
+use "${rawpath}/cfps2018/cfps2018famecon_202101.dta",clear
 
 clonevar propwhethersame = fq1
 
@@ -71,7 +75,7 @@ replace value_mkt = (fq6_max + fq6_min)/2 if fq6 < 0 & fq6_max > 0 & fq6_min > 0
 clonevar square_new = fq801
 replace square_new = . if square_new < 0
 
-merge m:1 fid14 using "${outpath}/temp/housing/housing_2014.dta",keep(1 3) nogen
+merge m:1 fid16 using "${outpath}/temp/housing/housing_2016.dta",keep(1 3) nogen
 replace square = square_new if (((fq8 == 2 |fq8 == 3) & fq1 == 1) | fq1 == 0 | fq1 < 0) & square_new != .
 
 clonevar otherprop = fr1
@@ -93,24 +97,25 @@ clonevar total_rent = fr501
 replace total_rent = . if total_rent < 0
 replace total_rent = 0 if lease == 0
 
-save "${outpath}/temp/econ_2016.dta",replace
+save "${outpath}/temp/econ_2018.dta",replace
 
-use "${outpath}/temp/ind_2016.dta",clear
-merge m:1 fid16 using "${outpath}/temp/econ_2016.dta",keep(3) nogen force
+use "${outpath}/temp/ind_2018.dta",clear
+merge m:1 fid18 using "${outpath}/temp/econ_2018.dta",keep(3) nogen force
 
-gen year = 2016
+gen year = 2018
 
 merge 1:1 pid using "${outpath}/temp/check2010.dta",keep(1 3) nogen
 gen isin2010 = 1 if pid10 != .
 replace isin2010 = 0 if pid10 == .
 
-merge 1:1 pid using "${outpath}/temp/famconf_2016.dta",keep(3) nogen
+merge 1:1 pid using "${outpath}/temp/famconf_2018.dta",keep(3) nogen
 
 gen selfown = .
 gen spouseown = .
 gen coown = .
 gen otherown = .
 gen spouselisted = .
+gen exist = .
 foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace spouseown = 1 if `i' == spouse_pid
 	replace selfown = 1 if `i' == pid
@@ -118,12 +123,13 @@ foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace spouseown = . if coown == 1
 	replace selfown = . if coown == 1
     replace spouselisted = 1 if spouseown == 1 | coown == 1
+    replace exist = 1 if `i' >0 & `i' != .
 }
-replace otherown = 1 if spouseown == . & selfown == . & coown == .
+replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist ==1
 foreach i in spouseown selfown coown otherown spouselisted{
     replace `i' = 0 if `i' == .
 }
 
 keep pid-urban age-edu propwhethersame-total_rent isin2010 year spouse_id-spouselisted
 
-save "${outpath}/temp/ind&econ_2016.dta",replace
+save "${outpath}/temp/ind&econ_2018.dta",replace
