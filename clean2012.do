@@ -97,6 +97,8 @@ clonevar male = cfps2012_gender_best
 clonevar edu = kr1
 replace edu = kw1 if kr1 < 0
 
+rename urban12 urban
+
 save "${outpath}/temp/ind_2012.dta",replace
 *----------------------------------ind2012----------------------------------
 
@@ -114,7 +116,7 @@ save "${outpath}/temp/famconf_2012.dta",replace
 use "${outpath}/temp/ind_2012.dta",clear
 
 merge m:1 fid12 using "${outpath}/temp/econ_2012.dta",keep(3) nogen
-keep pid-urban12 age-edu propertytype-othervalue
+keep pid-urban age-edu propertytype-othervalue
 
 merge 1:1 pid using "${outpath}/temp/famconf_2012.dta",keep(3) nogen
 
@@ -129,26 +131,25 @@ gen selfown = .
 gen spouseown = .
 gen coown = .
 gen otherown = .
+gen spouselisted = .
 foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace spouseown = 1 if `i' == spouse_id_lastdigit
 	replace selfown = 1 if `i' == indno
 	replace coown = 1 if spouseown == 1 & selfown == 1
 	replace spouseown = . if coown == 1
 	replace selfown = . if coown == 1
+    replace spouselisted = 1 if spouseown == 1 | coown == 1
 }
 replace otherown = 1 if spouseown == . & selfown == . & coown == .
+foreach i in spouseown selfown coown otherown spouselisted{
+    replace `i' = 0 if `i' == .
+}
 
 gen year = 2012
 
 save "${outpath}/temp/ind&econ_2012.dta",replace
 
-use "${rawpath}/cfps2010/cfps2010adult_202008.dta",clear
-keep pid
-clonevar pid10 = pid
-save "${outpath}/temp/check2010.dta",replace
-
-use "${outpath}/temp/ind&econ_2012.dta",clear
-merge 1:1 pid using "${outpath}/temp/check2010.dta"
+merge 1:1 pid using "${outpath}/temp/check2010.dta",keep(1 3) nogen
 gen isin2010 = 1 if pid10 != .
 replace isin2010 = 0 if pid10 == .
 
