@@ -45,6 +45,17 @@ replace owntype = 4 if otherown == 1
 label define owntype 1 "self" 2 "spouse" 3 "co" 4 "other"
 label values owntype owntype
 
+*At least drop those who never get married or have all missings
+preserve
+keep pid marry year
+reshape wide marry, i(pid) j(year)
+keep if marry2010 == 1 | marry2012 == 1 | marry2014 == 1 | marry2016 == 1 | marry2018 == 1
+keep pid
+save "${outpath}/temp/marry_identify.dta",replace
+restore
+
+merge m:1 pid using "${outpath}/temp/marry_identify.dta",keep(3) nogen
+
 save "${outpath}/data/ind&econ.dta",replace
 export delimited "${outpath}/data/ind&econ.csv",replace
 }
