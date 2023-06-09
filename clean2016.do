@@ -137,7 +137,7 @@ foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace parentlisted = 1 if (`i' == f_pid | `i' == m_pid)  & `i' != .
     replace exist = 1 if `i' >0 & `i' != .
 }
-replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist == 1
+replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist == 1 & parentown == .
 foreach i in spouseown selfown coown otherown spouselisted parentown parentlisted{
     replace `i' = 0 if `i' == .
 }
