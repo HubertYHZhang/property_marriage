@@ -100,8 +100,22 @@ replace f_pid = . if f_pid < 0
 clonevar m_pid = pid_m
 replace m_pid = . if m_pid < 0
 
+rename income income1
+clonevar income = income1
+replace income = . if income < 0
+
+
 clonevar edu = cfps2014edu
 replace edu = . if edu < 0
+gen edu_y = .
+replace edu_y = 0 if edu == 1 | edu == 9
+replace edu_y = 6 if edu == 2
+replace edu_y = 9 if edu == 3
+replace edu_y = 12 if edu == 4
+replace edu_y = 15 if edu == 5
+replace edu_y = 16 if edu == 6
+replace edu_y = 18 if edu == 7
+replace edu_y = 21 if edu == 8
 
 rename urban14 urban
 
@@ -111,7 +125,7 @@ merge m:1 fid14 using "${outpath}/temp/econ_2014.dta",keep(3) nogen
 merge m:1 cid14 using "${outpath}/temp/comm_2014.dta",keep(1 3) nogen
 
 *----------------------------------HIGHLIGHT----------------------------------
-keep pid-urban age-edu propwhethersame-total_rent code_a_s pid_s local_price_highest local_price
+keep pid-urban age-edu_y propwhethersame-total_rent code_a_s pid_s local_price_highest local_price
 
 clonevar spouse_id = code_a_s
 replace spouse_id = . if spouse_id < 0
