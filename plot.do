@@ -20,7 +20,7 @@ foreach i in 2012 2014 2016 2018{
 /* grc1leg sankey2012 sankey2014 sankey2016 sankey2018, legendfrom(sankey2012) row(1) title("Sankey Diagram of Ownership Type") xsize(15) ysize(3) */
 graph combine sankey2012 sankey2014 sankey2016 sankey2018,row(1) title("Sankey Diagram of Ownership Type") xsize(15) ysize(8)
 
-graph export "${outpath}/graphs/sankeyall_nonpanel.png", replace
+graph export "${outpath}/graphs_new/sankeyall_nonpanel.png", replace
 graph drop _all
 
 *----------------------------------------*
@@ -48,7 +48,7 @@ foreach i in 2012 2014 2016 2018{
 /* grc1leg sankey2012 sankey2014 sankey2016 sankey2018, legendfrom(sankey2012) row(1) title("Sankey Diagram of Ownership Type") xsize(15) ysize(3) */
 graph combine sankey2012 sankey2014 sankey2016 sankey2018,row(1) title("Sankey Diagram of Ownership Type") xsize(15) ysize(8)
 
-graph export "${outpath}/graphs/pbeforem_sankeyall_nonpanel.png", replace
+graph export "${outpath}/graphs_new/pbeforem_sankeyall_nonpanel.png", replace
 graph drop _all
 
 
@@ -76,7 +76,7 @@ foreach i in 2012 2014 2016 2018{
 /* grc1leg sankey2012 sankey2014 sankey2016 sankey2018, legendfrom(sankey2012) row(1) title("Sankey Diagram of Ownership Type") xsize(15) ysize(3) */
 graph combine sankey2012 sankey2014 sankey2016 sankey2018,row(1) title("Sankey Diagram of Ownership Type") xsize(15) ysize(8)
 
-graph export "${outpath}/graphs/pafterm_sankeyall_nonpanel.png", replace
+graph export "${outpath}/graphs_new/pafterm_sankeyall_nonpanel.png", replace
 graph drop _all
 
 /* use "${outpath}/data/sankey.dta",clear
@@ -91,6 +91,6 @@ sankeyplot owntype2010 owntype2012 owntype2014 owntype2016 owntype2018, /*
     */title("Sankey Diagram of Ownership Type") /*
     */xlabel(0 "2010" 1 "2012" 2 "2014" 3 "2016" 4 "2018")/*
     */ytitle("Relative Frequencies") xtitle("Year")
-graph export "${outpath}/graphs/sankey.png", replace
+graph export "${outpath}/graphs_new/sankey.png", replace
 
 sankeyplot owntype2012 owntype2014 */
