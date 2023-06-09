@@ -1,4 +1,27 @@
 
+*---------------------------------famconf2014----------------------------------
+use "${rawpath}/cfps2014/cfps2014famconf_170630.dta",clear
+
+keep if cfps2014_interv_p == 1
+keep if fid14 == fid12 | fid12 < 0 
+keep if co_a14_p == 1
+clonevar edu_s = tb4_a14_s
+replace edu_s = . if edu_s < 0
+gen edu_s_y = .
+replace edu_s_y = 0 if edu_s == 1
+replace edu_s_y = 6 if edu_s == 2
+replace edu_s_y = 9 if edu_s == 3
+replace edu_s_y = 12 if edu_s == 4
+replace edu_s_y = 15 if edu_s == 5
+replace edu_s_y = 16 if edu_s == 6
+replace edu_s_y = 18 if edu_s == 7
+replace edu_s_y = 21 if edu_s == 8
+replace edu_s_y = 0 if edu_s == 9
+
+keep edu_s edu_s_y pid
+
+save "${outpath}/temp/famconf_2014.dta",replace
+
 *----------------------------------comm2014----------------------------------
 use "${rawpath}/cfps2014/cfps2014comm_201906.dta",clear
 
@@ -73,6 +96,8 @@ save "${outpath}/temp/econ_2014.dta",replace
 
 *----------------------------------ind2014----------------------------------
 use "${rawpath}/cfps2014/cfps2014adult_201906.dta",clear
+
+rename provcd14 provcd
 
 clonevar age = cfps2014_age
 replace age = . if age < 0
@@ -165,5 +190,7 @@ gen year = 2014
 merge 1:1 pid using "${outpath}/temp/check2010.dta",keep(1 3) nogen
 gen isin2010 = 1 if pid10 != .
 replace isin2010 = 0 if pid10 == .
+
+merge 1:1 pid using "${outpath}/temp/famconf_2014.dta"
 
 save "${outpath}/temp/ind&econ_2014.dta",replace
