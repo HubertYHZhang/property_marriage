@@ -42,7 +42,8 @@ replace owntype = 1 if selfown == 1
 replace owntype = 2 if spouseown == 1
 replace owntype = 3 if coown == 1
 replace owntype = 4 if otherown == 1
-label define owntype 1 "self" 2 "spouse" 3 "co" 4 "other"
+replace owntype = 5 if parentown == 1
+label define owntype 1 "self" 2 "spouse" 3 "co" 4 "other" 5 "parent"
 label values owntype owntype
 
 *At least drop those who never get married or have all missings
@@ -77,9 +78,11 @@ else if `construct' == 2{
     keep if urban == 1
 
     keep if inrange(marry_y,2006,2016)
-
-    tab owntype purchase_y  if inrange(purchase_y ,2006 ,2016) & year == 2018,co
-
+    
+    gen post_purchase = 1 if purchase_y >= 2011
+    replace post_purchase = 0 if purchase_y < 2011
+    tab owntype post_purchase  if inrange(purchase_y ,2006 ,2016) & marry_y >= purchase_y & year == 2018,co
+    tab owntype purchase_y  if inrange(purchase_y ,2006 ,2016) & marry_y <= purchase_y & year == 2018,co
 }
 
 *这部分是对比一直存在的人，这是为了看他们房产登记上的变化
