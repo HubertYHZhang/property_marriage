@@ -9,6 +9,7 @@ replace purchase_y = . if purchase_y < 0
 local counter = 1
 foreach var in fq3_s_1 fq3_s_2 fq3_s_3 fq3_s_4 fq3_s_5 fq3_s_6 fq3_s_7 fq3_s_8{
 	clonevar regis_`counter' = `var'
+    replace regis_`counter' = . if regis_`counter' < 0
     local counter = `counter' + 1
 }
 
@@ -100,8 +101,22 @@ clonevar male = cfps2012_gender_best
 gen f_id_lastdigit = mod(pid_f,10) if inrange(mod(pid_f,1000),100,199)
 gen m_id_lastdigit = mod(pid_m,10) if inrange(mod(pid_m,1000),100,199)
 
+rename income income1
+clonevar income = income_adj
+replace income = . if income < 0
+
+
 clonevar edu = kr1
 replace edu = kw1 if kr1 < 0
+gen edu_y = .
+replace edu_y = 0 if edu == 1 | edu == 9
+replace edu_y = 6 if edu == 2
+replace edu_y = 9 if edu == 3
+replace edu_y = 12 if edu == 4
+replace edu_y = 15 if edu == 5
+replace edu_y = 16 if edu == 6
+replace edu_y = 18 if edu == 7
+replace edu_y = 21 if edu == 8
 
 rename urban12 urban
 
@@ -114,7 +129,20 @@ use "${rawpath}/cfps2012/cfps2012famconf_092015.dta",clear
 
 keep if cfps_interv_p == 1
 gen indno = code_a_p - 100 if inrange(code_a_p,100,199)
-keep pid code_a_s pid_s indno
+
+clonevar edu_s = tb4_a12_s
+replace edu_s = . if edu_s < 0
+gen edu_s_y = .
+replace edu_s_y = 0 if edu_s == 1
+replace edu_s_y = 6 if edu_s == 2
+replace edu_s_y = 9 if edu_s == 3
+replace edu_s_y = 12 if edu_s == 4
+replace edu_s_y = 15 if edu_s == 5
+replace edu_s_y = 16 if edu_s == 6
+replace edu_s_y = 18 if edu_s == 7
+replace edu_s_y = 21 if edu_s == 8
+
+keep pid code_a_s pid_s indno edu_s edu_s_y
 
 save "${outpath}/temp/famconf_2012.dta",replace
 
@@ -122,7 +150,7 @@ save "${outpath}/temp/famconf_2012.dta",replace
 use "${outpath}/temp/ind_2012.dta",clear
 
 merge m:1 fid12 using "${outpath}/temp/econ_2012.dta",keep(3) nogen
-keep pid-urban age-edu propertytype-othervalue
+keep pid-urban age-edu_y propertytype-othervalue
 
 merge 1:1 pid using "${outpath}/temp/famconf_2012.dta",keep(3) nogen
 
