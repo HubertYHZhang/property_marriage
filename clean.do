@@ -57,6 +57,11 @@ restore
 
 merge m:1 pid using "${outpath}/temp/marry_identify.dta",keep(3) nogen
 
+merge m:1 provcd year using "${outpath}/data/housingprice.dta",keep(1 3) nogen
+gen lnhp = ln(hp)
+
+gen lnincome = ln(income+1)
+
 save "${outpath}/data/ind&econ.dta",replace
 export delimited "${outpath}/data/ind&econ.csv",replace
 }
