@@ -130,8 +130,7 @@ clonevar spouse_pid = pid_s
 clonevar spouse_id = code_a_s
 replace spouse_id = . if spouse_id < 0
 /* gen spouse_id_lastdigit = spouse_id - 100 if inrange(spouse_id,100,199) */
-gen spouse_id_lastdigit = mod(spouse_pid,10)
-
+gen spouse_id_lastdigit = mod(code_a_s,10) if inrange(code_a_s,100,199)
 
 gen selfown = .
 gen spouseown = .
