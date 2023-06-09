@@ -138,8 +138,8 @@ foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace selfown = . if coown == 1
     replace spouselisted = 1 if spouseown == 1 | coown == 1
 	replace exist = 1 if `i' >0 & `i' != .
-	replace parentown = 1 if (`i' == f_id_lastdigit | `i' == m_id_lastdigit) & selfown == . & spouseown == . & coown == .  & `i' != .
-	replace parentlisted = 1 if (`i' == f_id_lastdigit | `i' == m_id_lastdigit)  & `i' != .
+	replace parentown = 1 if (`i' == f_pid | `i' == m_pid) & selfown == . & spouseown == . & coown == .  & `i' != .
+	replace parentlisted = 1 if (`i' == f_pid | `i' == m_pid)  & `i' != .
 }
 replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist == 1 & parentown == .
 foreach i in spouseown selfown coown otherown spouselisted parentown parentlisted{
