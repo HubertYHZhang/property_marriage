@@ -97,6 +97,9 @@ replace control2012_1 = 1 if marry2010 == 1|marry2010 == 3 & marry_raw == 2
 
 clonevar male = cfps2012_gender_best
 
+gen f_id_lastdigit = mod(pid_f,10) if inrange(mod(pid_f,1000),100,199)
+gen m_id_lastdigit = mod(pid_m,10) if inrange(mod(pid_m,1000),100,199)
+
 clonevar edu = kr1
 replace edu = kw1 if kr1 < 0
 
@@ -136,17 +139,22 @@ gen coown = .
 gen otherown = .
 gen spouselisted = .
 gen exist = .
+gen parentown = .
+gen parentlisted = .
 foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
-	replace spouseown = 1 if `i' == spouse_id_lastdigit
-	replace selfown = 1 if `i' == indno
-	replace coown = 1 if spouseown == 1 & selfown == 1
+	replace spouseown = 1 if `i' == spouse_id_lastdigit & `i' != .
+	replace selfown = 1 if `i' == indno & `i' != .
+	replace coown = 1 if spouseown == 1 & selfown == 1 & `i' != .
 	replace spouseown = . if coown == 1
 	replace selfown = . if coown == 1
     replace spouselisted = 1 if spouseown == 1 | coown == 1
+    replace parentown = 1 if (`i' == f_id_lastdigit | `i' == m_id_lastdigit) & selfown == . & spouseown == . & coown == . & `i' != .
+	replace parentlisted = 1 if (`i' == f_id_lastdigit | `i' == m_id_lastdigit) & `i' != .
+
     replace exist = 1 if `i' >0 & `i' != .
 }
-replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist == 1
-foreach i in spouseown selfown coown otherown spouselisted{
+replace otherown = 1 if spouseown == . & selfown == . & coown == .  & parentown ==. & exist == 1
+foreach i in spouseown selfown coown otherown spouselisted parentown parentlisted{
     replace `i' = 0 if `i' == .
 }
 
