@@ -131,8 +131,8 @@ gen exist = .
 gen parentown = .
 gen parentlisted = .
 foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
-	replace spouseown = 1 if `i' == spouse_pid
-	replace selfown = 1 if `i' == pid
+	replace spouseown = 1 if `i' == spouse_pid & `i' != .
+	replace selfown = 1 if `i' == pid & `i' != .
 	replace coown = 1 if spouseown == 1 & selfown == 1
 	replace spouseown = . if coown == 1
 	replace selfown = . if coown == 1
