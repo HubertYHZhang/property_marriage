@@ -95,6 +95,11 @@ replace marry_y = marry_y2012 if cfps2012_marriage == 2 & marry_y2012 > 0 & marr
 
 clonevar male = cfps_gender
 
+clonevar f_pid = pid_f
+replace f_pid = . if f_pid < 0
+clonevar m_pid = pid_m
+replace m_pid = . if m_pid < 0
+
 clonevar edu = cfps2014edu
 replace edu = . if edu < 0
 
@@ -123,6 +128,8 @@ gen coown = .
 gen otherown = .
 gen spouselisted = .
 gen exist = .
+gen parentown = .
+gen parentlisted = .
 foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace spouseown = 1 if `i' == spouse_pid
 	replace selfown = 1 if `i' == pid
@@ -131,9 +138,11 @@ foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
 	replace selfown = . if coown == 1
     replace spouselisted = 1 if spouseown == 1 | coown == 1
 	replace exist = 1 if `i' >0 & `i' != .
+	replace parentown = 1 if (`i' == f_id_lastdigit | `i' == m_id_lastdigit) & selfown == . & spouseown == . & coown == .  & `i' != .
+	replace parentlisted = 1 if (`i' == f_id_lastdigit | `i' == m_id_lastdigit)  & `i' != .
 }
-replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist == 1
-foreach i in spouseown selfown coown otherown spouselisted{
+replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist == 1 & parentown == .
+foreach i in spouseown selfown coown otherown spouselisted parentown parentlisted{
     replace `i' = 0 if `i' == .
 }
 
