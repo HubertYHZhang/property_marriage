@@ -2,6 +2,7 @@
 *-------------------------------ind2016-----------------------------*
 use "${rawpath}/cfps2018/cfps2018person_202012.dta",clear
 
+rename provcd18 provcd
 /* clonevar age = cfps_age
 replace age = . if age < 0 */
 rename age age1
@@ -65,7 +66,23 @@ replace f_pid = . if f_pid < 0
 clonevar m_pid = pid_a_m
 replace m_pid = . if m_pid < 0
 
-keep pid spouse_pid f_pid m_pid
+
+clonevar edu_s = tb4_a18_s
+replace edu_s = . if edu_s < 0
+
+gen edu_s_y = .
+replace edu_s_y = 0 if edu_s == 1
+replace edu_s_y = 6 if edu_s == 2
+replace edu_s_y = 9 if edu_s == 3
+replace edu_s_y = 12 if edu_s == 4
+replace edu_s_y = 15 if edu_s == 5
+replace edu_s_y = 16 if edu_s == 6
+replace edu_s_y = 18 if edu_s == 7
+replace edu_s_y = 21 if edu_s == 8
+replace edu_s_y = 0 if edu_s == 9
+
+
+keep pid spouse_pid f_pid m_pid edu_s edu_s_y
 
 save "${outpath}/temp/famconf_2018.dta",replace
 
