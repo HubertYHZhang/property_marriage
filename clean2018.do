@@ -30,8 +30,21 @@ replace marry_y = marry_y2016 if cfps2016_marriage == 2 & marry_y2016 > 0 & marr
 
 clonevar male = gender
 
+rename income income1
+clonevar income = income1
+replace income = . if income < 0
+
 clonevar edu = cfps2018edu
 replace edu = . if edu < 0
+gen edu_y = .
+replace edu_y = 0 if edu == 1 | edu == 9
+replace edu_y = 6 if edu == 2
+replace edu_y = 9 if edu == 3
+replace edu_y = 12 if edu == 4
+replace edu_y = 15 if edu == 5
+replace edu_y = 16 if edu == 6
+replace edu_y = 18 if edu == 7
+replace edu_y = 21 if edu == 8
 
 rename urban18 urban
 
@@ -115,7 +128,7 @@ save "${outpath}/temp/econ_2018.dta",replace
 use "${outpath}/temp/ind_2018.dta",clear
 merge m:1 fid18 using "${outpath}/temp/econ_2018.dta",keep(3) nogen force
 
-keep pid-urban age-edu propwhethersame-total_rent
+keep pid-urban age-edu_y propwhethersame-total_rent
 
 gen year = 2018
 
