@@ -86,8 +86,35 @@ replace first_mar = . if first_mar < 0
 
 clonevar male = gender
 
+rename income income1
+clonevar income = income1
+replace income = . if income < 0
+
+clonevar edu_s = tb4_a_s
+replace edu_s = . if edu_s < 0
+
+gen edu_s_y = .
+replace edu_s_y = 0 if edu_s == 1
+replace edu_s_y = 6 if edu_s == 2
+replace edu_s_y = 9 if edu_s == 3
+replace edu_s_y = 12 if edu_s == 4
+replace edu_s_y = 15 if edu_s == 5
+replace edu_s_y = 16 if edu_s == 6
+replace edu_s_y = 18 if edu_s == 7
+replace edu_s_y = 21 if edu_s == 8
+
 clonevar edu = qc1
 replace edu = . if edu < 0
+
+gen edu_y = .
+replace edu_y = 0 if edu == 1
+replace edu_y = 6 if edu == 2
+replace edu_y = 9 if edu == 3
+replace edu_y = 12 if edu == 4
+replace edu_y = 15 if edu == 5
+replace edu_y = 16 if edu == 6
+replace edu_y = 18 if edu == 7
+replace edu_y = 21 if edu == 8
 
 clonevar spouse_id = code_a_s
 replace spouse_id = . if spouse_id < 0
