@@ -55,3 +55,12 @@ beamer/LICENSE
 beamer/logo_RGB.png
 beamer/logo_RGB_negative.png
 beamer/sintefcolor.sty
+beamer/test/test.aux
+beamer/test/test.log
+beamer/test/test.nav
+beamer/test/test.out
+beamer/test/test.pdf
+beamer/test/test.snm
+beamer/test/test.synctex.gz
+beamer/test/test.tex
+beamer/test/test.toc
