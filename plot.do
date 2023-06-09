@@ -1,5 +1,6 @@
 use "${outpath}/data/ind&econ.dta",clear
 
+keep if propwhethersame == 1 | year == 2010| year == 2012
 
 keep pid owntype year marry_y marry
 reshape wide owntype marry_y marry, i(pid) j(year)
@@ -26,8 +27,9 @@ graph drop _all
 *----------------------------------------*
 use "${outpath}/data/ind&econ.dta",clear
 
-keep if marry_y >= purchase_y
+keep if propwhethersame == 1 | year == 2010| year == 2012
 
+keep if marry_y >= purchase_y
 
 keep pid owntype year marry_y marry
 reshape wide owntype marry_y marry, i(pid) j(year)
