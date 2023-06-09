@@ -1,5 +1,6 @@
 use "${outpath}/data/ind&econ.dta",clear
 
+
 keep pid owntype year marry_y marry
 reshape wide owntype marry_y marry, i(pid) j(year)
 
@@ -11,17 +12,74 @@ sankeyplot owntype2010 owntype2012 owntype2014 owntype2016 owntype2018
 foreach i in 2012 2014 2016 2018{
     local j = `i' - 2
     preserve
-    keep if marry`i' == 1 & marry`j' == 1
-    sankeyplot owntype`j' owntype`i',percent xtitle("Year") xlabel(0 "`j'" 1 "`i'") name(sankey`i')
-    graph export "${outpath}/graphs/sankey`j'_`i'.png", replace
+    /* keep if marry`i' == 1 & marry`j' == 1 */
+    sankeyplot owntype`j' owntype`i', xtitle("Year") xlabel(0 "`j'" 1 "`i'") name(sankey`i')
     restore
 }
 /* graph combine sankey2012 sankey2014 sankey2016 sankey2018, rows(1) name(sankeyall) */
-grc1leg sankey2012 sankey2014 sankey2016 sankey2018, legendfrom(sankey2012) row(1) title("Sankey Diagram of Ownership Type")
+/* grc1leg sankey2012 sankey2014 sankey2016 sankey2018, legendfrom(sankey2012) row(1) title("Sankey Diagram of Ownership Type") xsize(15) ysize(3) */
+graph combine sankey2012 sankey2014 sankey2016 sankey2018,row(1) title("Sankey Diagram of Ownership Type") xsize(15) ysize(8)
+
 graph export "${outpath}/graphs/sankeyall_nonpanel.png", replace
 graph drop _all
 
-use "${outpath}/data/sankey.dta",clear
+*----------------------------------------*
+use "${outpath}/data/ind&econ.dta",clear
+
+keep if marry_y >= purchase_y
+
+
+keep pid owntype year marry_y marry
+reshape wide owntype marry_y marry, i(pid) j(year)
+
+count if owntype2010 !=. & owntype2012 !=. & owntype2014 !=.
+
+/* keep if marry_y2010 <= 2010 */
+/* sankeyplot owntype2010 owntype2012 owntype2014 owntype2016 owntype2018 */
+
+foreach i in 2012 2014 2016 2018{
+    local j = `i' - 2
+    preserve
+    keep if marry`i' == 1 & marry`j' == 1
+    sankeyplot owntype`j' owntype`i', xtitle("Year") xlabel(0 "`j'" 1 "`i'") name(sankey`i')
+    restore
+}
+/* graph combine sankey2012 sankey2014 sankey2016 sankey2018, rows(1) name(sankeyall) */
+/* grc1leg sankey2012 sankey2014 sankey2016 sankey2018, legendfrom(sankey2012) row(1) title("Sankey Diagram of Ownership Type") xsize(15) ysize(3) */
+graph combine sankey2012 sankey2014 sankey2016 sankey2018,row(1) title("Sankey Diagram of Ownership Type") xsize(15) ysize(8)
+
+graph export "${outpath}/graphs/pbeforem_sankeyall_nonpanel.png", replace
+graph drop _all
+
+
+use "${outpath}/data/ind&econ.dta",clear
+
+keep if marry_y <= purchase_y
+
+
+keep pid owntype year marry_y marry
+reshape wide owntype marry_y marry, i(pid) j(year)
+
+count if owntype2010 !=. & owntype2012 !=. & owntype2014 !=.
+
+/* keep if marry_y2010 <= 2010 */
+/* sankeyplot owntype2010 owntype2012 owntype2014 owntype2016 owntype2018 */
+
+foreach i in 2012 2014 2016 2018{
+    local j = `i' - 2
+    preserve
+    keep if marry`i' == 1 & marry`j' == 1
+    sankeyplot owntype`j' owntype`i', xtitle("Year") xlabel(0 "`j'" 1 "`i'") name(sankey`i')
+    restore
+}
+/* graph combine sankey2012 sankey2014 sankey2016 sankey2018, rows(1) name(sankeyall) */
+/* grc1leg sankey2012 sankey2014 sankey2016 sankey2018, legendfrom(sankey2012) row(1) title("Sankey Diagram of Ownership Type") xsize(15) ysize(3) */
+graph combine sankey2012 sankey2014 sankey2016 sankey2018,row(1) title("Sankey Diagram of Ownership Type") xsize(15) ysize(8)
+
+graph export "${outpath}/graphs/pafterm_sankeyall_nonpanel.png", replace
+graph drop _all
+
+/* use "${outpath}/data/sankey.dta",clear
 
 encode _2010 ,gen(owntype2010)
 encode _2012 ,gen(owntype2012)
@@ -35,4 +93,4 @@ sankeyplot owntype2010 owntype2012 owntype2014 owntype2016 owntype2018, /*
     */ytitle("Relative Frequencies") xtitle("Year")
 graph export "${outpath}/graphs/sankey.png", replace
 
-sankeyplot owntype2012 owntype2014
+sankeyplot owntype2012 owntype2014 */
