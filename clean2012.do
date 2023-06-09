@@ -105,7 +105,6 @@ rename income income1
 clonevar income = income_adj
 replace income = . if income < 0
 
-
 clonevar edu = kr1
 replace edu = kw1 if kr1 < 0
 gen edu_y = .
@@ -119,6 +118,7 @@ replace edu_y = 18 if edu == 7
 replace edu_y = 21 if edu == 8
 
 rename urban12 urban
+rename fid12 fid
 
 save "${outpath}/temp/ind_2012.dta",replace
 *----------------------------------ind2012----------------------------------
