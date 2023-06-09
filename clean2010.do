@@ -44,6 +44,8 @@ replace purchase_y = . if purchase_y < 0
 clonevar build_y = fd103
 replace build_y = . if build_y < 0
 
+replace purchase_y = build_y if purchase_y == .
+
 clonevar square = fd2
 replace square = . if square < 0
 
@@ -58,7 +60,7 @@ clonevar housetype = fd6
 
 clonevar otherprop = fd7
 
-save "${outpath}/temp/marriage/econ_2010.dta",replace
+save "${outpath}/temp/econ_2010.dta",replace
 
 *----------------------------------econ2010----------------------------------
 
@@ -101,7 +103,17 @@ merge m:1 cid using "${outpath}/temp/comm_2010.dta",keep(1 3) nogen
 
 gen year = 2010
 
+preserve
+use "${rawpath}/cfps2010/cfps2010famconf_202008.dta",clear
+keep pid code_a_f code_a_m
+save "${outpath}/temp/famconf_2010.dta",replace
+restore
+
 keep pid-urban age-spouse_pid regis_1-otherprop year local_price_highest local_price
+
+merge 1:1 pid using "${outpath}/temp/famconf_2010.dta",keep(3) nogen
+gen f_id_lastdigit = mod(code_a_f,10) if inrange(code_a_f,100,199)
+gen m_id_lastdigit = mod(code_a_m,10) if inrange(code_a_m,100,199)
 
 gen selfown = .
 gen spouseown = .
@@ -109,19 +121,25 @@ gen coown = .
 gen otherown = .
 gen spouselisted = .
 gen exist = .
+gen parentown = .
+gen parentlisted = .
 foreach i in regis_1 regis_2 regis_3{
-	replace spouseown = 1 if `i' == spouse_id_lastdigit
-	replace selfown = 1 if `i' == indno
-	replace coown = 1 if spouseown == 1 & selfown == 1
+	replace spouseown = 1 if `i' == spouse_id_lastdigit & `i' != .
+	replace selfown = 1 if `i' == indno & `i' !=.
+	replace coown = 1 if spouseown == 1 & selfown == 1 & `i' != .
 	replace spouseown = . if coown == 1
 	replace selfown = . if coown == 1
-	replace spouselisted = 1 if spouseown ==1 | coown == 1
+	replace spouselisted = 1 if spouseown ==1 | coown == 1 
+	replace parentown = 1 if (`i' == f_id_lastdigit | `i' == m_id_lastdigit) & selfown == . & spouseown == . & coown == . & `i' != .
+	replace parentlisted = 1 if (`i' == f_id_lastdigit | `i' == m_id_lastdigit) & `i' != .
     replace exist = 1 if `i' >0 & `i' != .
 }
-replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist == 1
+replace otherown = 1 if spouseown == . & selfown == . & coown == . & parentown ==. & exist == 1
 
-foreach i in selfown spouseown coown otherown spouselisted{
+foreach i in selfown spouseown coown otherown spouselisted parentown parentlisted{
 	replace `i' = 0 if `i' == .
 }
+
+count if selfown == 0 & spouseown == 0 & coown == 0 
 
 save "${outpath}/temp/ind&econ_2010.dta",replace
