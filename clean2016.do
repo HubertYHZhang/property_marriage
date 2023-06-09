@@ -37,9 +37,15 @@ save "${outpath}/temp/ind_2016.dta",replace
 
 use "${rawpath}/cfps2016/cfps2016famconf_201804.dta",clear
 
-keep pid pid_s code_a_s
-rename pid_s spouse_pid
-rename code_a_s spouse_id
+clonevar spouse_pid = pid_s
+replace spouse_pid = . if pid_s < 0
+
+clonevar f_pid = pid_f
+replace f_pid = . if f_pid < 0
+
+clonevar m_pid = pid_m
+replace m_pid = . if m_pid < 0
+keep pid spouse_pid f_pid m_pid
 
 save "${outpath}/temp/famconf_2016.dta",replace
 
@@ -102,6 +108,8 @@ save "${outpath}/temp/econ_2016.dta",replace
 use "${outpath}/temp/ind_2016.dta",clear
 merge m:1 fid16 using "${outpath}/temp/econ_2016.dta",keep(3) nogen force
 
+keep pid-urban age-edu propwhethersame-total_rent
+
 gen year = 2016
 
 merge 1:1 pid using "${outpath}/temp/check2010.dta",keep(1 3) nogen
@@ -116,20 +124,22 @@ gen coown = .
 gen otherown = .
 gen spouselisted = .
 gen exist = .
+gen parentown = .
+gen parentlisted = .
 foreach i in regis_1 regis_2 regis_3 regis_4 regis_5 regis_6 regis_7 regis_8{
-	replace spouseown = 1 if `i' == spouse_pid
-	replace selfown = 1 if `i' == pid
+	replace spouseown = 1 if `i' == spouse_pid & `i' != .
+	replace selfown = 1 if `i' == pid & `i' != .
 	replace coown = 1 if spouseown == 1 & selfown == 1
 	replace spouseown = . if coown == 1
 	replace selfown = . if coown == 1
     replace spouselisted = 1 if spouseown == 1 | coown == 1
+	replace parentown = 1 if (`i' == f_pid | `i' == m_pid) & selfown == . & spouseown == . & coown == .  & `i' != .
+	replace parentlisted = 1 if (`i' == f_pid | `i' == m_pid)  & `i' != .
     replace exist = 1 if `i' >0 & `i' != .
 }
 replace otherown = 1 if spouseown == . & selfown == . & coown == . & exist == 1
-foreach i in spouseown selfown coown otherown spouselisted{
+foreach i in spouseown selfown coown otherown spouselisted parentown parentlisted{
     replace `i' = 0 if `i' == .
 }
-
-keep pid-urban age-edu propwhethersame-total_rent isin2010 year spouse_id-spouselisted
 
 save "${outpath}/temp/ind&econ_2016.dta",replace
