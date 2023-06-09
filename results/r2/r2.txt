@@ -1,0 +1,14 @@
+	(1)	(2)
+VARIABLES	spouselisted	spouselisted
+		
+c.post#c.lnhp	0.077***	
+	(0.018)	
+Constant	-1.730***	0.174***
+	(0.669)	(0.029)
+		
+Observations	9,320	9,320
+R-squared	0.714	0.713
+Individual FE	Yes	Yes
+Year FE	Yes	Yes
+Standard errors in parentheses		
+*** p<0.01, ** p<0.05, * p<0.1		
