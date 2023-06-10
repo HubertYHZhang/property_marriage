@@ -119,6 +119,7 @@ replace edu_y = 21 if edu == 8
 
 rename urban12 urban
 rename fid12 fid
+clonevar fid12 = fid
 
 save "${outpath}/temp/ind_2012.dta",replace
 *----------------------------------ind2012----------------------------------
