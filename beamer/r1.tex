@@ -1,0 +1,133 @@
+\documentclass{article}
+
+\usepackage{bigstrut}
+
+\begin{document}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Add caption}
+      \begin{tabular}{lllrrr}
+      \hline
+      \multicolumn{1}{c}{} & \multicolumn{1}{c}{(1)} & \multicolumn{1}{c}{(2)} & \multicolumn{1}{c}{(3)} & \multicolumn{1}{c}{(4)} & \multicolumn{1}{c}{(5)} \bigstrut[t]\\
+      \multicolumn{1}{c}{} & \multicolumn{1}{c}{edu\_s} & \multicolumn{1}{c}{edu} & \multicolumn{1}{c}{marry\_y} & \multicolumn{1}{c}{p\_y} & \multicolumn{1}{c}{lninc} \\
+                 &            &            &            &            &  \bigstrut[b]\\
+      \hline
+                 & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} \bigstrut[t]\\
+      \multicolumn{1}{c}{self} & \multicolumn{1}{c}{-0.013***} & \multicolumn{1}{c}{0.001} & \multicolumn{1}{c}{-0.008***} & \multicolumn{1}{c}{-0.004***} & \multicolumn{1}{c}{-0.003} \\
+      \multicolumn{1}{c}{} & \multicolumn{1}{c}{(0.003)} & \multicolumn{1}{c}{(0.003)} & \multicolumn{1}{c}{(0.002)} & \multicolumn{1}{c}{(0.001)} & \multicolumn{1}{c}{(0.002)} \\
+                 &            &            &            &            &  \\
+      \multicolumn{1}{c}{spouse} & \multicolumn{1}{c}{0.008***} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.003**} & \multicolumn{1}{c}{0.002**} & \multicolumn{1}{c}{0.002} \\
+      \multicolumn{1}{c}{} & \multicolumn{1}{c}{(0.002)} & \multicolumn{1}{c}{(0.002)} & \multicolumn{1}{c}{(0.001)} & \multicolumn{1}{c}{(0.001)} & \multicolumn{1}{c}{(0.001)} \\
+                 &            &            &            &            &  \\
+      \multicolumn{1}{c}{co} & \multicolumn{1}{c}{0.006**} & \multicolumn{1}{c}{0.002} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.004***} & \multicolumn{1}{c}{0.002} \\
+      \multicolumn{1}{c}{} & \multicolumn{1}{c}{(0.002)} & \multicolumn{1}{c}{(0.002)} & \multicolumn{1}{c}{(0.001)} & \multicolumn{1}{c}{(0.001)} & \multicolumn{1}{c}{(0.002)} \\
+                 &            &            &            &            &  \\
+      \multicolumn{1}{c}{other} & \multicolumn{1}{c}{0.001} & \multicolumn{1}{c}{-0.001} & \multicolumn{1}{c}{0.002*} & \multicolumn{1}{c}{0.001*} & \multicolumn{1}{c}{-0.001} \\
+      \multicolumn{1}{c}{} & \multicolumn{1}{c}{(0.001)} & \multicolumn{1}{c}{(0.001)} & \multicolumn{1}{c}{(0.001)} & \multicolumn{1}{c}{(0.001)} & \multicolumn{1}{c}{(0.001)} \\
+                 &            &            &            &            &  \\
+      \multicolumn{1}{c}{parent} & \multicolumn{1}{c}{-0.002} & \multicolumn{1}{c}{-0.001} & \multicolumn{1}{c}{0.003**} & \multicolumn{1}{c}{-0.004***} & \multicolumn{1}{c}{-0.000} \\
+      \multicolumn{1}{c}{} & \multicolumn{1}{c}{(0.001)} & \multicolumn{1}{c}{(0.002)} & \multicolumn{1}{c}{(0.001)} & \multicolumn{1}{c}{(0.000)} & \multicolumn{1}{c}{(0.001)} \\
+                 &            &            &            &            &  \\
+      \multicolumn{1}{c}{N} & \multicolumn{1}{c}{2664} & \multicolumn{1}{c}{2664} & \multicolumn{1}{c}{2664} & \multicolumn{1}{c}{2664} & \multicolumn{1}{c}{2664} \bigstrut[b]\\
+      \hline
+                 &            &            &            &            &  \bigstrut[t]\\
+      Standard errors in parentheses &            &            &            &            &  \\
+      ="* p<0.05 &  ** p<0.01 &  *** p<0.001" &            &            &  \\
+      \end{tabular}%
+    \label{tab:addlabel}%
+  \end{table}%
+
+  {
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{5}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}\\
+            &\multicolumn{1}{c}{edu(s)} &\multicolumn{1}{c}{edu} &\multicolumn{1}{c}{marry year} &\multicolumn{1}{c}{p year} &\multicolumn{1}{c}{lninc} \\
+\hline
+      &                     &                     &                     &                     &                     \\
+self  &      -0.013\sym{***}&       0.001         &      -0.008\sym{***}&      -0.004\sym{***}&      -0.003         \\
+            &     (0.003)         &     (0.003)         &     (0.002)         &     (0.001)         &     (0.002)         \\
+[1em]
+spouse  &       0.008\sym{***}&       0.000         &       0.003\sym{**} &       0.002\sym{**} &       0.002         \\
+            &     (0.002)         &     (0.002)         &     (0.001)         &     (0.001)         &     (0.001)         \\
+[1em]
+co  &       0.006\sym{**} &       0.002         &       0.000         &       0.004\sym{***}&       0.002         \\
+            &     (0.002)         &     (0.002)         &     (0.001)         &     (0.001)         &     (0.002)         \\
+[1em]
+other  &       0.001         &      -0.001         &       0.002\sym{*}  &       0.001\sym{*}  &      -0.001         \\
+            &     (0.001)         &     (0.001)         &     (0.001)         &     (0.001)         &     (0.001)         \\
+[1em]
+parent  &      -0.002         &      -0.001         &       0.003\sym{**} &      -0.004\sym{***}&      -0.000         \\
+            &     (0.001)         &     (0.002)         &     (0.001)         &     (0.000)         &     (0.001)         \\
+\hline
+\(N\)       &        2664         &        2664         &        2664         &        2664         &        2664         \\
+\hline\hline
+\multicolumn{6}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{6}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+}
+\vspace{\fill}
+
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{5}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}\\
+            &\multicolumn{1}{c}{edu(s)} &\multicolumn{1}{c}{edu} &\multicolumn{1}{c}{marry year} &\multicolumn{1}{c}{p year} &\multicolumn{1}{c}{lninc} \\
+\hline
+    &                     &                     &                     &                     &                     \\
+self  &      -0.015\sym{***}&       0.001         &      -0.007\sym{*}  &       0.002         &       0.003         \\
+            &     (0.003)         &     (0.003)         &     (0.003)         &     (0.001)         &     (0.003)         \\
+[1em]
+spouse  &       0.008\sym{***}&       0.000         &       0.004\sym{***}&       0.001         &      -0.002         \\
+            &     (0.002)         &     (0.002)         &     (0.001)         &     (0.001)         &     (0.001)         \\
+[1em]
+co  &       0.005\sym{*}  &       0.003         &      -0.001         &       0.003\sym{**} &       0.002         \\
+            &     (0.002)         &     (0.003)         &     (0.002)         &     (0.001)         &     (0.002)         \\
+[1em]
+other  &       0.002         &      -0.001         &       0.000         &       0.000         &      -0.002\sym{*}  \\
+            &     (0.002)         &     (0.002)         &     (0.001)         &     (0.001)         &     (0.001)         \\
+[1em]
+parent  &      -0.001         &      -0.003         &       0.004\sym{*}  &      -0.007\sym{***}&      -0.000         \\
+            &     (0.002)         &     (0.002)         &     (0.002)         &     (0.001)         &     (0.002)         \\
+\hline
+\(N\)       &        1563         &        1563         &        1563         &        1563         &        1563         \\
+\hline\hline
+\multicolumn{6}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{6}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+}
+
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{5}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}\\
+            &\multicolumn{1}{c}{edu(s)} &\multicolumn{1}{c}{edu} &\multicolumn{1}{c}{marry year} &\multicolumn{1}{c}{p year} &\multicolumn{1}{c}{lninc} \\
+\hline
+       &                     &                     &                     &                     &                     \\
+1.\_predict  &      -0.011         &      -0.004         &      -0.013\sym{*}  &      -0.003         &       0.001         \\
+            &     (0.006)         &     (0.006)         &     (0.005)         &     (0.002)         &     (0.005)         \\
+[1em]
+2.\_predict  &       0.009\sym{*}  &      -0.001         &       0.005         &       0.002         &       0.001         \\
+            &     (0.004)         &     (0.004)         &     (0.003)         &     (0.001)         &     (0.003)         \\
+[1em]
+3.\_predict  &       0.009\sym{*}  &       0.003         &       0.006         &       0.004\sym{*}  &       0.001         \\
+            &     (0.004)         &     (0.005)         &     (0.004)         &     (0.002)         &     (0.004)         \\
+[1em]
+4.\_predict  &      -0.001         &      -0.001         &       0.001         &       0.002         &      -0.002         \\
+            &     (0.003)         &     (0.003)         &     (0.003)         &     (0.001)         &     (0.002)         \\
+[1em]
+5.\_predict  &      -0.007         &       0.003         &       0.001         &      -0.005\sym{***}&      -0.002         \\
+            &     (0.004)         &     (0.004)         &     (0.004)         &     (0.001)         &     (0.003)         \\
+\hline
+\(N\)       &         436         &         436         &         436         &         436         &         436         \\
+\hline\hline
+\multicolumn{6}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{6}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+}
+
+
+\end{document}
