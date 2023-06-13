@@ -1,36 +1,111 @@
 \documentclass[11pt]{article}
 
-\usepackage[margin=1.1in]{geometry}
-\usepackage{setspace}
-\usepackage{amsmath}
 % \usepackage{xeCJK}
-\usepackage{graphicx}
-\usepackage{libertine}
-\usepackage{natbib}
+\usepackage{tgpagella}
+\usepackage{amssymb,amsmath,amsfonts,eurosym,geometry,ulem,graphicx,caption,color,setspace,sectsty,comment,footmisc,caption,natbib,pdflscape,subfigure,array,hyperref}
 
+\normalem
+
+\onehalfspacing
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+
+\newtheorem{hyp}{Hypothesis}
+\newtheorem{subhyp}{Hypothesis}[hyp]
+\renewcommand{\thesubhyp}{\thehyp\alph{subhyp}}
+
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\blue}[1]{{\color{blue} #1}}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\arraybackslash\hspace{0pt}}m{#1}}
+
+\geometry{left=1.0in,right=1.0in,top=1.0in,bottom=1.0in}
+
+
+\begin{document}
+\begin{titlepage}
 \title{Housing Price, Property Rights, and Intra-household Bargaining Power}
 \author{Yuhao Zhang}
 \date{May 2023}
-
-\onehalfspacing
-
-\begin{document}
 \maketitle
 \begin{abstract}
-    
+\noindent Placeholder\\
+\vspace{0in}\\
+\noindent\textbf{Keywords:} key1, key2, key3\\
+\vspace{0in}\\
+\noindent\textbf{JEL Codes:} key1, key2, key3\\
+
+\bigskip
 \end{abstract}
+\setcounter{page}{0}
+\thispagestyle{empty}
+\end{titlepage}
+\pagebreak \newpage
+
 
 \section{Introduction}
-A number of studies explore the impact of changes in housing, a major component of marriage-and-family-related matters in China, on marriage and household behavior. For one thing, traditional notions emphasize housing as the material root of a family. For another thing, the housing market in China has experienced a dramatic boom in the past decades, which has led to a significant increase in housing prices, rendering housing purchase a major challenge for the new couples to conquer. 
+A number of studies explore the impact of changes in housing, a major component of marriage-and-family-related matters in China, on marriage and household behavior. For one thing, traditional notions emphasize housing as the material root of a family. For another thing, the housing market in China has experienced a dramatic boom in the past decades, which has led to a significant increase in housing prices, rendering housing purchase a major challenge for the new couples to conquer.
+
+In 2011, the Supreme Court of China announced a new statutory interpretation of \textit{the Marriage Law} in terms of several issues upon property division after a divorce. Among these, \textbf{one of the} most noticeable changes is that the housing purchased by either spouse before marriage, or the housing the down payment of which was paid by one spouse and registered solely with his/her name, is no longer considered as a joint property of the couple. Instead, it is considered as a personal property, or only the mortgage loan paid with the common wealth after marriage will be transformed into debt. \textbf{In addition}, the housing bought by either spouse's parents and registered with this child's name after marriage should only be deemed as a gift instead of the couple's joint property.
+
+
+
 
 In this study, we try to make some subtle contribution to these studies by examining how the rising housing price and marital property right reform co-
 
-\section{Literature Review}
+\section{Literature Review} \label{sec:literature}
 \citet{SUN2020102492} examined how the surging housing price reinforces assortative mating and may enlarge inequality. \citet{WANG2014192} examined how property ownership of females 
 
 
+\section{Data} \label{sec:data}
 
-\bibliographystyle{apalike}
-\bibliography{reference.bib}
+\section{Results} \label{sec:result}
+
+\section{Discussions} \label{sec:discussion}
+
+\section{Conclusion} \label{sec:conclusion}
+
+
+
+\singlespacing
+\setlength\bibsep{0pt}
+\bibliographystyle{my-style}
+\bibliography{Placeholder}
+
+
+
+\clearpage
+
+\onehalfspacing
+
+\section*{Tables} \label{sec:tab}
+\addcontentsline{toc}{section}{Tables}
+
+
+
+\clearpage
+
+\section*{Figures} \label{sec:fig}
+\addcontentsline{toc}{section}{Figures}
+
+%\begin{figure}[hp]
+%  \centering
+%  \includegraphics[width=.6\textwidth]{../fig/placeholder.pdf}
+%  \caption{Placeholder}
+%  \label{fig:placeholder}
+%\end{figure}
+
+
+
+
+\clearpage
+
+\section*{Appendix A. Placeholder} \label{sec:appendixa}
+\addcontentsline{toc}{section}{Appendix A}
+
 
 \end{document}
