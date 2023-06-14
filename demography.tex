@@ -1,8 +1,7 @@
 \documentclass[11pt]{article}
 
-% \usepackage{xeCJK}
-\usepackage{tgpagella}
-\usepackage{amssymb,amsmath,amsfonts,eurosym,geometry,ulem,graphicx,caption,color,setspace,sectsty,comment,footmisc,caption,natbib,pdflscape,subfigure,array,hyperref}
+% \usepackage{}
+\usepackage{amssymb,amsmath,amsfonts,eurosym,geometry,ulem,graphicx,caption,color,setspace,sectsty,comment,footmisc,caption,natbib,pdflscape,subfigure,array,hyperref,xeCJK}
 
 \normalem
 
@@ -47,21 +46,33 @@
 \pagebreak \newpage
 
 
-\section{Introduction}
+\section{Introduction} \label{sec:intro}
 A number of studies explore the impact of changes in housing, a major component of marriage-and-family-related matters in China, on marriage and household behavior. For one thing, traditional notions emphasize housing as the material root of a family. For another thing, the housing market in China has experienced a dramatic boom in the past decades, which has led to a significant increase in housing prices, rendering housing purchase a major challenge for the new couples to conquer.
 
 In 2011, the Supreme Court of China announced a new statutory interpretation of \textit{the Marriage Law} in terms of several issues upon property division after a divorce. Among these, \textbf{one of the} most noticeable changes is that the housing purchased by either spouse before marriage, or the housing the down payment of which was paid by one spouse and registered solely with his/her name, is no longer considered as a joint property of the couple. Instead, it is considered as a personal property, or only the mortgage loan paid with the common wealth after marriage will be transformed into debt. The court can justifiably say that the housing should belong to its nominal owner. \textbf{In addition}, the housing bought by either spouse's parents and registered with this child's name after marriage should only be deemed as a gift instead of the couple's joint property.
 
-These new instructions were bound to have great impacts on Chinese families. Some regard this interpretation as a severe violation of women's rights, since it encourages men to divorce their wives with litigation without losing their properties. \footnote{As we will see later, before 2011, half of the families in our sample registered their housings under the husbands' names} Therefore, it is highly possible that a man will have a stronger bargaining power in the family, since the outside option of the female is quite determined by him. 
+These new instructions were bound to have great impacts on Chinese families. Some regard this interpretation as a severe violation of women's rights, since it encourages men to divorce their wives with litigation without losing their properties. \footnote{As we will see later, before 2011, half of the families in our sample registered their housing under the husbands' names} Therefore, it is highly possible that a man will have a stronger bargaining power in the family, since the outside option of the female is quite determined by him. On the other hand, however, wives can strive to put their names on the license to maximize their benefits, which again depends on \textbf{their} bargaining power. Their mutual determination of each other, for one thing, complicates our research on the impact of the reform, but, for another things, it illustrates the intricacies of bargaining power and economic behaviors within Chinese families.
 
+Based on (Inspired by) this new judicial interpretation, our research examines how the housing registration of Chinese families evolve during the past decade and how it is related to the intra-household bargaining power and other features. Furthermore, we put this into the context of the incredibly booming property market in China, which should be a major consideration for both singles and married couples when making decisions.
+
+\section{Literature Review} \label{sec:literature}
+\citet{SUN2020102492} mainly examined how the surging housing price reinforces assortative mating (raising the years of education of wives). As a robustness test, however, the new judicial interpretation was found to lower such sorting since there is fewer expected benefits to attract the well-educated females to marry with men. (This can also be attributed partly to the change in bargaining power arrangements after marriage).
+
+\citet{WANG2014192} solely focused on this interpretation and examined its impact on intra-household behavior 
+with a difference-in-differences approach. Naturally, they set the treatment group to be those who bought houses \textbf{before} marriage whereas the control group to be those who purchased \textbf{after} the marriage, among whom the former group has a higher probability to exclude the wife's name out of the license. They found that the males who bought houses before marriage tended more to smoke and drink excessively, while their wives had less leisure time and their children got fewer resources in human capital investments. 
 
 In this study, we try to make some subtle contribution to these studies by examining how the rising housing price and marital property right reform co-
 
-\section{Literature Review} \label{sec:literature}
-\citet{SUN2020102492} examined how the surging housing price reinforces assortative mating and may enlarge inequality. \citet{WANG2014192} examined how property ownership of females 
-
 
 \section{Data} \label{sec:data}
+
+China Family Panel Studies (CFPS), a major representative panel survey on Chinese families, which collected abundant information from residents in terms of their family configuration, economic status, personal history, etc. Fortunately, we are able to track many households' housing registration information from 2010 to 2018, which is the main data source for our research. 
+
+\section{Methods} \label{sec:method}
+
+We first provide some descriptive evidence on the change of housing registration, mainly using the \textit{Sankey plot}, which is a type of flow diagram that visualizes the flow of data between a set of nodes. In our case, the nodes are the different types of housing registration, and the flow is the number of households that shift from one type to another.
+
+To explore the correlation between family characteristics and the shift in housing registration, we use multiple Logistic regression model to see the impact of each variable on the probability of the registration being each kind.
 
 \section{Results} \label{sec:result}
 
