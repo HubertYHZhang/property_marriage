@@ -1,13 +1,15 @@
-\begin{thebibliography}{}
+\ifx\undefined\bysame
+\newcommand{\bysame}{\leavevmode\hbox to\leftmargin{\hrulefill\,\,}}
+\fi
+\begin{thebibliography}{xx}
 
-\bibitem[Sun and Zhang, 2020]{SUN2020102492}
-Sun, A. and Zhang, Q. (2020).
-\newblock Who marries whom in a surging housing market?
-\newblock {\em Journal of Development Economics}, 146:102492.
+\harvarditem[Huang et al.]{Huang, Pantano, Ye and Yi}{2023}{Huang532}
+{\bf Huang, Yuting, Juan Pantano, Han Ye, and Junjian Yi}, ``Property Division upon Divorce and Household Decisions,'' {\it Journal of Human Resources}, 2023, {\it 58} (2), 532--560.
 
-\bibitem[Wang, 2014]{WANG2014192}
-Wang, S.-Y. (2014).
-\newblock Property rights and intra-household bargaining.
-\newblock {\em Journal of Development Economics}, 107:192--201.
+\harvarditem[Sun and Zhang]{Sun and Zhang}{2020}{SUN2020102492}
+{\bf Sun, Ang and Qinghua Zhang}, ``Who marries whom in a surging housing market?,'' {\it Journal of Development Economics}, 2020, {\it 146}, 102492.
+
+\harvarditem[Wang]{Wang}{2014}{WANG2014192}
+{\bf Wang, Shing-Yi}, ``Property rights and intra-household bargaining,'' {\it Journal of Development Economics}, 2014, {\it 107}, 192--201.
 
 \end{thebibliography}

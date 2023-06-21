@@ -29,7 +29,7 @@ keep if year == 2012
 mlogit owntype edu_y age lnincome edu_s_y lnhp marry_y purchase_y
 
 *现在看看后面的每两年有没有类似的pattern
-local year = 2014
+local year = 2016
 use "${outpath}/data/ind&econ.dta",clear
 
 keep if year == `year' | year == `year'+2
@@ -54,7 +54,7 @@ keep if year == `year'+2
 gen pbefore = 1 if marry_y > purchase_y
 replace pbefore = 0 if marry_y <= purchase_y
 
-mlogit owntype edu_y age lnincome edu_s_y marry_y purchase_y
+mlogit owntype edu_y age age_s lnincome edu_s_y marry_y purchase_y
 
 eststo m1: margins, dydx(edu_s_y) post
 qui mlogit owntype edu_y age lnincome edu_s_y marry_y purchase_y

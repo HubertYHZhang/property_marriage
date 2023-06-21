@@ -65,7 +65,6 @@ save "${outpath}/temp/econ_2010.dta",replace
 *----------------------------------econ2010----------------------------------
 
 
-*妈的这个2012数据有问题我不想用了
 use "${rawpath}/cfps2010/cfps2010adult_202008.dta",clear
 
 *----------------------------------ind2010----------------------------------
@@ -102,6 +101,9 @@ replace edu_s_y = 15 if edu_s == 5
 replace edu_s_y = 16 if edu_s == 6
 replace edu_s_y = 18 if edu_s == 7
 replace edu_s_y = 21 if edu_s == 8
+
+clonevar age_s = tb1b_a_s
+replace age_s = . if age_s < 0
 
 clonevar edu = qc1
 replace edu = . if edu < 0

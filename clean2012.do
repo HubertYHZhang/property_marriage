@@ -143,7 +143,10 @@ replace edu_s_y = 16 if edu_s == 6
 replace edu_s_y = 18 if edu_s == 7
 replace edu_s_y = 21 if edu_s == 8
 
-keep pid code_a_s pid_s indno edu_s edu_s_y
+clonevar age_s = tb1y_a_s
+replace age_s = . if age_s < 0
+
+keep pid code_a_s pid_s indno edu_s edu_s_y age_s
 
 save "${outpath}/temp/famconf_2012.dta",replace
 

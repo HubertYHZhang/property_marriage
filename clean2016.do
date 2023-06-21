@@ -77,7 +77,11 @@ replace edu_s_y = 18 if edu_s == 7
 replace edu_s_y = 21 if edu_s == 8
 replace edu_s_y = 0 if edu_s == 9
 
-keep pid spouse_pid f_pid m_pid edu_s edu_s_y
+clonevar birthy_s =tb1y_a_s
+replace birthy_s = . if birthy_s < 0
+gen age_s = 2016 - birthy_s
+
+keep pid spouse_pid f_pid m_pid edu_s edu_s_y age_s
 
 save "${outpath}/temp/famconf_2016.dta",replace
 

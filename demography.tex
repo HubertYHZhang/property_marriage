@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 
 % \usepackage{}
-\usepackage{amssymb,amsmath,amsfonts,eurosym,geometry,ulem,graphicx,caption,color,setspace,sectsty,comment,footmisc,caption,natbib,pdflscape,subfigure,array,hyperref,xeCJK}
+\usepackage{amssymb,amsmath,amsfonts,eurosym,geometry,ulem,graphicx,caption,color,setspace,sectsty,comment,footmisc,caption,natbib,pdflscape,array,hyperref,caption,subcaption}
 
 \normalem
 
@@ -27,7 +27,7 @@
 
 \begin{document}
 \begin{titlepage}
-\title{Property Division, Housing Registration, and Intra-household Bargaining Power: Evidence from China}
+\title{\textbf{Property Division, Housing Registration, and Intra-household Bargaining Power: Evidence from China}}
 \author{Yuhao Zhang}
 \date{May 2023}
 \maketitle
@@ -89,12 +89,54 @@ In Figure \ref{fig:sankeyall_nonpanel}, I divide the sample into pairs of adjace
 
 From 2010 to 2012, the proportion of co-owned housing has saliently risen, a large part of which is contributed by the converted husband-owned housing. Despite some increase in co-owned proportion in the following years, there are also a lot of families change their joint registration to a husband-owned one. The proportion of wife-owned and parent-owned housing are relatively stable. These pieces of evidence indicate the possible impact of the interpretation on how families register their houses as well as how highly Chinese families value their housing. Another implication is that people do care about ``outside option'', even if Chinese traditional culture regards divorce as a taboo in discourse.
 
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graphs_new/pbeforem_sankeyall_nonpanel.png}
+        \caption{Purchase before marriage}
+        \label{fig:pbeforem}
+        
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{graphs_new/pafterm_sankeyall_nonpanel.png}
+        \subcaption{Purchase after marriage}
+        \label{fig:pafterm}
+        
+    \end{subfigure}
+    \caption{Sankey Diagram according to the timing of purchase}
+    \label{fig:timing}
+\end{figure}
+
+Figure \ref{fig:timing} tells us more about the possible impact of the interpretation. We divide the families into those who purchased their housing before marriage and the other. According to \citet{Huang532}, those who purchase housing before marriage, typically buying the house using one's or one's parents' money and registering it under only that person's name, are more likely to be affected by the interpretation. However, we even see a more drastic increase in co-owned housing among those who purchase after marriage. As for those who bought houses before marriage, their parents contribute much to the purchase and transfer the ownership to their children after 2010. Of course, the weight of co-ownership also increases among them.
+
 \subsection{Mechanisms}
 
-To explore the correlation between family characteristics and the shift in housing registration, we use multiple Logistic regression model to see the impact of each variable on the probability of the registration being each kind.
+To explore the correlation between family characteristics and the shift in housing registration, we use multiple Logistic regression model to see the impact of each variable on the probability of the registration being each kind. We cannot capture the change from multiple states to multiple states, so this analysis is restricted to those who initially have a husband-owned house in one wave as well as the same group of people in the next wave. 
+
+\begin{table}[h]
+    \centering
+    \input{./results/r1/mlogit_2010rn.tex}
+    \caption{Logistic Regression Results - Based on 2010}
+    \label{tab:logit}
+
+\end{table}
+
+Rows are dependent variables and columns are independent variables in Table \ref{tab:logit}. The results are shown as average marginal effects. As shown, the education of wives well predicts a lower probability of husbands' ownership and a higher probability of wives' ownership and co-ownership, which is consistent with the bargaining power hypothesis - a well-educated wife has a larger power in the family, thus being more capable to list her name on the license. Column 3 and 4 say that the later a couple gets married or purchases the house, the more likely they change the owner(s) to the wife or both. We also observe quite similar patterns in later waves, which will be skipped for brevity.
 
 
 
+\subsection{Housing Price}
+
+In a booming housing market, we naturally wonder how 
+
+\begin{table}
+    \centering
+    \caption{Generalized DID}
+    \label{tab:did}
+\end{table}
 
 \section{Discussions} \label{sec:discussion}
 
@@ -104,8 +146,8 @@ To explore the correlation between family characteristics and the shift in housi
 
 \singlespacing
 \setlength\bibsep{0pt}
-\bibliographystyle{my-style}
-\bibliography{Placeholder}
+\bibliographystyle{aer}
+\bibliography{reference}
 
 
 
