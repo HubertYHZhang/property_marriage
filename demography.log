@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.2)  21 JUN 2023 22:39
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.2)  21 JUN 2023 23:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -625,23 +625,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--40
 ] [1]
 File: ./graphs_new/sankeyall_nonpanel.png Graphic file (type bmp)
 <./graphs_new/sankeyall_nonpanel.png>
- [2] (./demography.bbl) [3] [4
-
-] [5
-
-] [6
-
-] (./demography.aux)
+ [2] (./demography.bbl [3]) [4] (./demography.aux)
 Package rerunfilecheck Info: File `demography.out' has not changed.
-(rerunfilecheck)             Checksum: 511F0DFEED39E97B655BE3CF0DDCA2F0;1199.
+(rerunfilecheck)             Checksum: A377B102D93F91D631052E8D961AE39B;947.
  ) 
 Here is how much of TeX's memory you used:
- 16419 strings out of 476683
- 338573 string characters out of 5804048
+ 16416 strings out of 476683
+ 338540 string characters out of 5804048
  1859018 words of memory out of 5000000
- 36424 multiletter control sequences out of 15000+600000
+ 36421 multiletter control sequences out of 15000+600000
  521838 words of font info for 87 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 72i,8n,81p,980b,357s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,8n,81p,980b,453s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on demography.pdf (7 pages).
+Output written on demography.pdf (5 pages).
