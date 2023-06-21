@@ -55,7 +55,7 @@ These new instructions were bound to have great impacts on Chinese families. Som
 
 Based on (Inspired by) this new judicial interpretation, our research examines how the housing registration of Chinese families evolve during the past decade and how it is related to the intra-household bargaining power and other features. Furthermore, we put this into the context of the incredibly booming property market in China, which should be a major consideration for both singles and married couples when making decisions.
 
-Overall, in our sample, the proportion of couples who list both the husband and the wife on the license significantly increases, with husband-registered houses accounting for about 50\% of the houses initially but less and less henceforth. The proportion of houses registered under the wife's name does not have a robust trend of changing.
+Overall, in our sample, the proportion of couples who list both the husband and the wife on the license significantly increases, with husband-registered houses accounting for over 50\% of the houses initially but less and less henceforth. The proportion of houses registered under the wife's name does not have a robust trend of changing. There is also a flow from parents-registered houses to co-owned houses, which is consistent with the fact that the new judicial interpretation also considers the former as a gift to one side of the couple.
 
 \section{Literature Review} \label{sec:literature}
 \citet{SUN2020102492} mainly examined how the surging housing price reinforces assortative mating (raising the years of education of wives). As a robustness test, however, the new judicial interpretation was found to lower such sorting since there is fewer expected benefits to attract the well-educated females to marry with men. (This can also be attributed partly to the change in bargaining power arrangements after marriage).
@@ -68,16 +68,32 @@ In this study, we try to make some subtle contribution to these studies by exami
 
 \section{Data} \label{sec:data}
 
-China Family Panel Studies (CFPS), a major representative panel survey on Chinese families, which collected abundant information from residents in terms of their family configuration, economic status, personal history, etc. Fortunately, we are able to track many households' housing registration information from 2010 to 2018, which is the main data source for our research. 
+China Family Panel Studies (CFPS), a major representative panel survey on Chinese families, which collected abundant information from residents in terms of their family configuration, economic status, personal history, etc. Fortunately, we are able to track many households' housing registration information from 2010 to 2018, which is the main data source for our research.
 
-\section{Methods} \label{sec:method}
+In addition, variables on other characteristics are surveyed in CFPS, such as individuals' ages, genders, income, etc. The macro housing price data are at provincial level and are obtained from the website of National Bureau of Statistics (\href{https://data.stats.gov.cn/easyquery.htm?cn=E0103}{https://data.stats.gov.cn/easyquery.htm?cn=E0103}).
+
+\section{Empirical Design and Results} \label{sec:method}
+
+\subsection{Descriptive Analysis}
 
 We first provide some descriptive evidence on the change of housing registration, mainly using the \textit{Sankey plot}, which is a type of flow diagram that visualizes the flow of data between a set of nodes. In our case, the nodes are the different types of housing registration, and the flow is the number of households that shift from one type to another.
 
+\begin{figure}
+    \centering
+    \includegraphics[width = \textwidth]{./graphs_new/sankeyall_nonpanel.png}
+    \caption{Non Panel}
+    \label{fig:sankeyall_nonpanel}
+\end{figure}
+
+In Figure \ref{fig:sankeyall_nonpanel}, I divide the sample into pairs of adjacent waves. This is because there are rarely families appearing in all the waves of surveys, and we can instead look at neighboring waves to see the change in housing registration. Note that in the legend, ``self'' refers to the husband and ``spouse'' refers to the wife.
+
+From 2010 to 2012, the proportion of co-owned housing has saliently risen, a large part of which is contributed by the converted husband-
+
+\subsection{Mechanisms}
+
 To explore the correlation between family characteristics and the shift in housing registration, we use multiple Logistic regression model to see the impact of each variable on the probability of the registration being each kind.
 
-\section{Results} \label{sec:result}
-Economics demography is 
+
 
 \section{Discussions} \label{sec:discussion}
 
