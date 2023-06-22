@@ -75,9 +75,9 @@ keep if marry == 1
 
 keep if inrange(year,2010,2014)
 
-egen hpmed = median(hp),by(year)
-gen hphigh = 1 if hp >= hpmed & hp != .
-replace hphigh = 0 if hp < hpmed
+egen hpmed = median(hp2010),by(year)
+gen hphigh = 1 if hp2010 >= hpmed & hp != . & hpmed != .
+replace hphigh = 0 if hp2010 < hpmed & hp != . & hpmed != .
 
 gen post = 1 if year > 2011
 replace post = 0 if year < 2011
@@ -85,18 +85,42 @@ replace post = 0 if year < 2011
 gen pbefore = 1 if marry_y > purchase_y
 replace pbefore = 0 if marry_y <= purchase_y
 
+preserve
+keep if year == 2010
+keep pid value_mkt
+rename value_mkt value_mkt2010
+save "${outpath}/temp/value2010.dta",replace
+restore
+
+merge m:1 pid using "${outpath}/temp/value2010.dta",keep(1 3) nogen
+gen lnvmk = ln(value_mkt2010)
+
 reghdfe spouselisted c.post##c.grate edu_y edu_s_y lnincome pbefore,a(pid year)
 
-reghdfe spouselisted c.post##c.lnhp edu_y edu_s_y lnincome pbefore,a(pid year)
-outreg2 using "${outpath}/results/r2/r2.tex", tex(frag) replace keep(c.post#c.lnhp) bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes)
-reghdfe spouselisted c.post##c.grate edu_y edu_s_y lnincome pbefore,a(pid year)
-outreg2 using "${outpath}/results/r2/r2.tex", tex(frag) append keep(c.post#c.lnhp) bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes)
+reghdfe spouselisted c.post##c.lnhp2010 age age_s edu_y edu_s_y lnincome pbefore marry_y ,a(pid year)
+outreg2 using "${outpath}/results/r2/r2.tex", tex(frag) replace bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes) ctitle("Listed")
+/* reghdfe spouselisted c.post##c.grate age age_s edu_y edu_s_y lnincome pbefore marry_y,a(pid year)
+outreg2 using "${outpath}/results/r2/r2.tex", tex(frag) append keep(c.post#c.lnhp) bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes) ctitle("Listed vs. Growth Rate") */
 
 reghdfe spouselisted c.post##c.hphigh edu_y edu_s_y lnincome pbefore ,a(pid year)
-outreg2 using "${outpath}/results/r2/r2_med.tex", tex(frag) replace keep(c.post#c.hphigh) bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes)
+outreg2 using "${outpath}/results/r2/r2.tex",tex(frag) bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes) ctitle("Listed") append
 
-reghdfe coown c.post##c.lnhp edu_y edu_s_y lnincome pbefore ,a(pid year)
-outreg2 using "${outpath}/results/r2/r2_co.tex", tex(frag) replace keep(c.post#c.lnhp) bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes)
+reghdfe spouselisted c.post##c.lnvmk age age_s edu_y edu_s_y lnincome pbefore marry_y ,a(pid year)
+outreg2 using "${outpath}/results/r2/r2.tex",tex(frag) bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes) ctitle("Listed") append
+
+reghdfe coown c.post##c.lnhp2010  age age_s edu_y edu_s_y lnincome pbefore marry_y,a(pid year)
+outreg2 using "${outpath}/results/r2/r2.tex", append tex(frag) bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes) ctitle("Coownership")
+
+reghdfe coown c.post##c.hphigh  age age_s edu_y edu_s_y lnincome pbefore marry_y ,a(pid year)
+outreg2 using "${outpath}/results/r2/r2.tex",tex(frag) bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes) ctitle("Coownership") append
+
+reghdfe coown c.post##c.lnvmk age age_s edu_y edu_s_y lnincome pbefore marry_y,a(pid year)
+outreg2 using "${outpath}/results/r2/r2.tex",tex(frag) bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes) ctitle("Coownership") append
+
+reghdfe coown c.post##c.lnvmk##c.edu_s_y  age age_s edu_y edu_s_y lnincome pbefore marry_y,a(pid year)
+outreg2 using ${outpath}/results/r2/r2_mech.tex, tex(frag) bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes) ctitle("Coownership") replace
+
+
 *即便剔除了上海也依然显著
 reghdfe coown c.post##c.grate edu_y edu_s_y lnincome pbefore ,a(pid year)
 outreg2 using "${outpath}/results/r2/r2_co.tex", tex(frag) append keep(c.post#c.lnhp) bdec(3) sdec(3) addtext(Individual FE, Yes, Year FE, Yes)

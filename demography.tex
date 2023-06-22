@@ -112,7 +112,7 @@ From 2010 to 2012, the proportion of co-owned housing has saliently risen, a lar
 
 Figure \ref{fig:timing} tells us more about the possible impact of the interpretation. We divide the families into those who purchased their housing before marriage and the other. According to \citet{Huang532}, those who purchase housing before marriage, typically buying the house using one's or one's parents' money and registering it under only that person's name, are more likely to be affected by the interpretation. However, we even see a more drastic increase in co-owned housing among those who purchase after marriage. As for those who bought houses before marriage, their parents contribute much to the purchase and transfer the ownership to their children after 2010. Of course, the weight of co-ownership also increases among them.
 
-\subsection{Mechanisms}
+\subsection{To Predict the Change in Housing Registration}
 
 To explore the correlation between family characteristics and the shift in housing registration, we use multiple Logistic regression model to see the impact of each variable on the probability of the registration being each kind. We cannot capture the change from multiple states to multiple states, so this analysis is restricted to those who initially have a husband-owned house in one wave as well as the same group of people in the next wave. 
 
@@ -130,13 +130,25 @@ Rows are dependent variables and columns are independent variables in Table \ref
 
 \subsection{Housing Price}
 
-In a booming housing market, we naturally wonder how 
+In a booming housing market, we naturally wonder how the price of housing may mediate this change in housing registration. We employ a generalized difference-in-differences method to roughly identify the causal effect or at least correlation. The model is as follows:
+
+\begin{equation*}
+    Y_{it} = \beta_1 Post_{t}* Treat_{i} + \mathbf{X_{it}} + \lambda_t + \lambda_i + \varepsilon_{it}
+\end{equation*}
+
+In the model, $Treat_{i}$ is generalized to be a continuous variable, housing price in our context, and $Post_t$ is a uniform time cut-off, equal to $1$ after 2011 and $0$ otherwise. The dependent variable is an indicator of whether the wife is listed on the license, \textit{Listed} henceforth. We compare families in 2010 and 2012 and set the treatment variable to be the logarithm of provincial housing price in 2010. Controls include the ages of the couple, their years of education, the logarithm of husband's income, whether the house is purchased before marriage, and the year of marriage. The results are shown in column 1 of Table \ref{tab:did}. The coefficient of interest ($\beta_1$) is positive and significant. We also use \textit{High}, defined as whether higher than the median housing price, as a dummy treatment variable and obtain significant results (column 2). We also make use of the data of the market value of the house in 2010 in CFPS, which are partly missing (column 3).  
 
 \begin{table}
     \centering
+    \resizebox{\textwidth}{!}{\input{results/r2/r2 copy.tex}
+    }
     \caption{Generalized DID}
     \label{tab:did}
 \end{table}
+
+However, when we try to check its robustness and drop families in Shanghai, a major city with high housing price, $\beta_1$ is no longer significant (results not shown here). This is partly because of the coexistence of an extremely high housing price and a high bargaining power of females in Shanghai. After changing the dependent variable to \textit{Coownership}, however, the results remain robust no matter Shanghai is excluded or not. Column 4, 5, and 6 show the results in full sample.
+
+We also try to interact $Post\times Treat$ with other variables to find mechanisms. We do find some informative patterns, particularly the results in column 7, which shows that higher education of the wife further catalyse co-ownership when the market value of the house is high. This means that a higher bargaining power encourages wives to win more benefits by altering registration.
 
 \section{Discussions} \label{sec:discussion}
 

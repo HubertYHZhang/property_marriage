@@ -60,6 +60,18 @@ merge m:1 pid using "${outpath}/temp/marry_identify.dta",keep(3) nogen
 merge m:1 provcd year using "${outpath}/data/housingprice.dta",keep(1 3) nogen
 gen lnhp = ln(hp)
 
+preserve
+use "${outpath}/data/housingprice.dta",clear
+keep if year == 2010
+rename hp hp2010
+keep provcd hp2010
+save "${outpath}/data/housingprice2010.dta",replace
+restore
+
+merge m:1 provcd using "${outpath}/data/housingprice2010.dta",keep(1 3) nogen
+
+gen lnhp2010 = ln(hp2010)
+
 gen lnincome = ln(income+1)
 
 save "${outpath}/data/ind&econ.dta",replace

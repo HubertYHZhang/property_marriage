@@ -189,6 +189,18 @@ foreach i in spouseown selfown coown otherown spouselisted parentown parentliste
     replace `i' = 0 if `i' == .
 }
 
+*Spouse info merge
+preserve
+use "${rawpath}/cfps2014/cfps2014adult_201906.dta",clear
+keep pid employ2014
+rename pid pid_s
+save "${outpath}/temp/spouse_info2014.dta",replace
+restore
+
+merge m:1 pid_s using "${outpath}/temp/spouse_info2014.dta",keep(1 3) nogen
+rename employ2014 employ
+replace employ = . if employ == -8 | employ == 3
+
 gen year = 2014
 
 merge 1:1 pid using "${outpath}/temp/check2010.dta",keep(1 3) nogen
